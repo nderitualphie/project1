@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "396771461958",
+    "project_id": "agriculture-commerce",
+    "storage_bucket": "agriculture-commerce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396771461958:android:c2b874e40332d4ec8b3347",
+        "android_client_info": {
+          "package_name": "com.example.app2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396771461958-jcankjgogn96fdt0noesv3m5h0nj67o5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGUQdj1R2K0-eodb6nMNvnlsHRObkaU6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396771461958-jcankjgogn96fdt0noesv3m5h0nj67o5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
