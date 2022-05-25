@@ -73,36 +73,37 @@ class _CheckoutPageState extends State<CheckoutPage> {
           ),
         ),
         body: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              ListView.builder(
-                // scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: productProvider.getCartModelListlength,
-                itemBuilder: (context, index) {
-                  return CartSingleProduct(
-                      name: productProvider.cartModelList[index].name,
-                      image: productProvider.cartModelList[index].image,
-                      price: productProvider.cartModelList[index].price,
-                      quantity: productProvider.cartModelList[index].quantity!);
-                },
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            ListView.builder(
+              physics: ScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: productProvider.getCartModelListlength,
+              itemBuilder: (context, index) {
+                return CartSingleProduct(
+                    name: productProvider.cartModelList[index].name,
+                    image: productProvider.cartModelList[index].image,
+                    price: productProvider.cartModelList[index].price,
+                    quantity: productProvider.cartModelList[index].quantity!);
+              },
+            ),
+            Container(
+              height: 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildBottomDetails(
+                      startName: 'Your Price', endName: "ksh 40"),
+                  _buildBottomDetails(startName: 'Discount', endName: "2%"),
+                  _buildBottomDetails(
+                      startName: 'Shipping', endName: "ksh 100"),
+                  _buildBottomDetails(startName: 'Total', endName: "ksh 138"),
+                ],
               ),
-              Container(
-                color: Colors.blue,
-                height: 100,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildBottomDetails(
-                        startName: 'Your Price', endName: "ksh 40"),
-                    _buildBottomDetails(startName: 'Discount', endName: "2%"),
-                    _buildBottomDetails(
-                        startName: 'Shipping', endName: "ksh 100"),
-                    _buildBottomDetails(startName: 'Total', endName: "ksh 138"),
-                  ],
-                ),
-              ),
-            ])));
+            ),
+          ]),
+        ));
   }
 }

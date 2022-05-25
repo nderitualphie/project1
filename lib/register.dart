@@ -1,10 +1,8 @@
 import 'dart:io';
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 
 import 'login.dart';
 
@@ -21,12 +19,11 @@ class _RegisterState extends State<Register> {
   final _formkey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
   CollectionReference ref = FirebaseFirestore.instance.collection('users');
-  final TextEditingController passwordController =  TextEditingController();
-  final TextEditingController confirmpassController =
-       TextEditingController();
-  final TextEditingController name =  TextEditingController();
-  final TextEditingController emailController =  TextEditingController();
-  final TextEditingController mobile =  TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmpassController = TextEditingController();
+  final TextEditingController name = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneNocontroller = TextEditingController();
   bool _isObscure = true;
   bool _isObscure2 = true;
   File? file;
@@ -34,12 +31,10 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Container(
-              color: Colors.green,
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: SingleChildScrollView(
@@ -55,10 +50,10 @@ class _RegisterState extends State<Register> {
                           height: 80,
                         ),
                         Text(
-                          "Register Now",
+                          "Register",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 40,
                           ),
                         ),
@@ -78,12 +73,12 @@ class _RegisterState extends State<Register> {
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 8.0),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:  BorderSide(color: Colors.white),
-                              borderRadius:  BorderRadius.circular(20),
+                              borderSide: BorderSide(color: Colors.green),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                             enabledBorder: UnderlineInputBorder(
-                              borderSide:  BorderSide(color: Colors.white),
-                              borderRadius:  BorderRadius.circular(20),
+                              borderSide: BorderSide(color: Colors.green),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                           ),
                           validator: (value) {
@@ -124,16 +119,16 @@ class _RegisterState extends State<Register> {
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 15.0),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:  BorderSide(color: Colors.white),
-                              borderRadius:  BorderRadius.circular(20),
+                              borderSide: BorderSide(color: Colors.green),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                             enabledBorder: UnderlineInputBorder(
-                              borderSide:  BorderSide(color: Colors.white),
-                              borderRadius:  BorderRadius.circular(20),
+                              borderSide: BorderSide(color: Colors.green),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                           ),
                           validator: (value) {
-                            RegExp regex =  RegExp(r'^.{6,}$');
+                            RegExp regex = RegExp(r'^.{6,}$');
                             if (value!.isEmpty) {
                               return "Password cannot be empty";
                             }
@@ -168,12 +163,12 @@ class _RegisterState extends State<Register> {
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 15.0),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.white),
-                              borderRadius: new BorderRadius.circular(20),
+                              borderSide: BorderSide(color: Colors.green),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                             enabledBorder: UnderlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.white),
-                              borderRadius: new BorderRadius.circular(20),
+                              borderSide: BorderSide(color: Colors.green),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                           ),
                           validator: (value) {
@@ -189,33 +184,41 @@ class _RegisterState extends State<Register> {
                         SizedBox(
                           height: 20,
                         ),
-                        Row(
+                        // TextFormField(
+                        //   controller: phoneNocontroller,
+                        //   validator: (value) {
+                        //     if (value == "") {
+                        //       return "Please enter your phone number ";
+                        //     } else if (value!.length < 10) {
+                        //       return "Phone number must be 11 digits ";
+                        //     }
+                        //     return "";
+                        //   },
+                        //   onChanged: (value) {},
+                        //   decoration: InputDecoration(
+                        //     hintText: "Enter your phone Number",
+                        //     contentPadding: const EdgeInsets.only(
+                        //         left: 14.0, bottom: 8.0, top: 15.0),
+                        //     hintStyle: TextStyle(color: Colors.black),
+                        //     enabled: true,
+                        //     filled: true,
+                        //     focusedBorder: OutlineInputBorder(
+                        //       borderSide: BorderSide(color: Colors.green),
+                        //       borderRadius: BorderRadius.circular(20),
+                        //     ),
+                        //     enabledBorder: UnderlineInputBorder(
+                        //       borderSide: BorderSide(color: Colors.green),
+                        //       borderRadius: BorderRadius.circular(20),
+                        //     ),
+                        //   ),
+                        // ),
+                        // SizedBox(
+                        //   height: 40,
+                        // ),
+                        Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            MaterialButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20.0))),
-                              elevation: 5.0,
-                              height: 40,
-                              onPressed: () {
-                                CircularProgressIndicator();
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginPage(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                              color: Colors.white,
-                            ),
                             MaterialButton(
                               shape: RoundedRectangleBorder(
                                   borderRadius:
@@ -239,15 +242,33 @@ class _RegisterState extends State<Register> {
                               ),
                               color: Colors.white,
                             ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            MaterialButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20.0))),
+                              elevation: 5.0,
+                              height: 40,
+                              onPressed: () {
+                                CircularProgressIndicator();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginPage(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "Login",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                              color: Colors.white,
+                            ),
                           ],
-                        ),
-                        Text(
-                          "WEBFUN",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                            color: Colors.yellowAccent[400],
-                          ),
                         ),
                       ],
                     ),
