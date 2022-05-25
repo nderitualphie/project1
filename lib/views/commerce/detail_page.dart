@@ -1,4 +1,5 @@
 import 'package:app2/views/commerce/cart_page.dart';
+import 'package:app2/views/commerce/notifications.dart';
 
 import 'homepage.dart';
 import 'provider/product_provider.dart';
@@ -207,14 +208,7 @@ class _DetailViewState extends State<DetailView> {
                 Icons.arrow_back,
                 color: Colors.black,
               )),
-          actions: [
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.notifications,
-                  color: Colors.black,
-                ))
-          ],
+          actions: [NotificationButton()],
           title: const Text(
             'Detail Page',
             style: TextStyle(color: Colors.black),

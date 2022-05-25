@@ -6,14 +6,14 @@ class CartSingleProduct extends StatefulWidget {
   final String? image;
   int quantity;
   final int? price;
-  final bool isCount;
+  
   CartSingleProduct(
       {Key? key,
       required this.name,
       required this.image,
       required this.price,
       required this.quantity,
-      required this.isCount})
+     })
       : super(key: key);
 
   @override
@@ -23,7 +23,7 @@ class CartSingleProduct extends StatefulWidget {
 class _CartSingleProductState extends State<CartSingleProduct> {
   @override
   Widget build(BuildContext context) {
-    int count = 1;
+   
 
     return Container(
       height: 180,
@@ -71,11 +71,11 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                             ),
                             Container(
                               height: 50,
-                              width: widget.isCount == false ? 100 : 80,
+                              width:  100 ,
                               decoration: BoxDecoration(
                                   color: Colors.green,
                                   borderRadius: BorderRadius.circular(20)),
-                              child: widget.isCount ==false?
+                              child:
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -105,9 +105,9 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                                       },
                                       child: const Icon(Icons.add)),
                                 ]
-                                ),)          
+                                )          
                       
-                      ],
+                      )],
               
                     ),
             

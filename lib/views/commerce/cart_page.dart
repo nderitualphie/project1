@@ -1,4 +1,5 @@
 import 'package:app2/views/commerce/checkout_page.dart';
+import 'package:app2/views/commerce/notifications.dart';
 import 'package:provider/provider.dart';
 
 import 'cartsingle_product.dart';
@@ -29,6 +30,7 @@ class _CartPageState extends State<CartPage> {
           margin: const EdgeInsets.all(10),
           child: ElevatedButton(
             onPressed: () {
+              productProvider.addNotification("Notification");
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => CheckoutPage()));
             },
@@ -54,14 +56,7 @@ class _CartPageState extends State<CartPage> {
                 Icons.arrow_back,
                 color: Colors.black,
               )),
-          actions: [
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.notifications,
-                  color: Colors.black,
-                ))
-          ],
+          actions: [NotificationButton()],
           title: const Text(
             'Cart Page',
             style: TextStyle(color: Colors.black),
@@ -70,7 +65,6 @@ class _CartPageState extends State<CartPage> {
         body: ListView.builder(
           itemCount: productProvider.getCartModelListlength,
           itemBuilder: (context, index) => CartSingleProduct(
-            isCount: false,
             image: productProvider.getCartModelList[index].image,
             price: productProvider.getCartModelList[index].price,
             name: productProvider.getCartModelList[index].name,

@@ -26,9 +26,10 @@ class ProductProvider with ChangeNotifier {
   int get getCartModelListlength {
     return cartModelList.length;
   }
- List<CartModel> checkOutModelList = [];
+
+  List<CartModel> checkOutModelList = [];
   late CartModel checkOutModel;
- void deleteCheckoutProduct(int index) {
+  void deleteCheckoutProduct(int index) {
     checkOutModelList.removeAt(index);
     notifyListeners();
   }
@@ -42,11 +43,9 @@ class ProductProvider with ChangeNotifier {
     int? quantity,
     int? price,
     String? name,
-    
     String? image,
   }) {
     checkOutModel = CartModel(
-     
       price: price,
       name: name,
       image: image,
@@ -62,6 +61,7 @@ class ProductProvider with ChangeNotifier {
   int get getCheckOutModelListLength {
     return checkOutModelList.length;
   }
+
   List<Product> feature = [];
   late Product featuredata;
   Future<void> getfeaturedata() async {
@@ -163,5 +163,14 @@ class ProductProvider with ChangeNotifier {
 
   List<Product> get homeArrivalRow {
     return homeArrival;
+  }
+
+  List<String> notificationList = [];
+  void addNotification(String notification) {
+    notificationList.add(notification);
+  }
+
+  int get getnotificationsList {
+    return notificationList.length;
   }
 }

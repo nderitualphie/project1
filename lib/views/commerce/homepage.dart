@@ -1,3 +1,4 @@
+import 'package:app2/views/commerce/notifications.dart';
 import 'package:app2/views/commerce/provider/product_provider.dart';
 import 'package:app2/views/commerce/singleproducts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,23 +22,6 @@ class DefaultPage extends StatefulWidget {
 late ProductProvider productProvider;
 var featuresnaphot;
 var newarrivalssnapshot;
-// late Product passiondata;
-// late Product bananasdata;
-// late Product spinachdata;
-// late Product limedata;
-// late Product honeydata;
-// late Product maizedata;
-// late Product pepperdata;
-// late Product onionsdata;
-
-// late Product applesdata;
-// late Product orangesdata;
-// late Product cabbagesdata;
-// late Product carrotdata;
-// late Product beetrootdata;
-// late Product apricotdata;
-// late Product tomatoesdata;
-// late Product brocollidata;
 
 class _DefaultPageState extends State<DefaultPage> {
   Widget _buildNewArrivals() {
@@ -375,11 +359,7 @@ class _DefaultPageState extends State<DefaultPage> {
               onPressed: () {},
               icon: const Icon(Icons.search, color: Colors.black),
             ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.notifications),
-              color: Colors.black,
-            ),
+            NotificationButton()
           ],
         ),
         body: Container(

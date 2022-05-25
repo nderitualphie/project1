@@ -1,5 +1,6 @@
 import 'package:app2/views/commerce/cart_page.dart';
 import 'package:app2/views/commerce/cartsingle_product.dart';
+import 'package:app2/views/commerce/notifications.dart';
 import 'package:app2/views/commerce/provider/product_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -64,12 +65,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 color: Colors.black,
               )),
           actions: [
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.notifications,
-                  color: Colors.black,
-                ))
+            NotificationButton(),
           ],
           title: const Text(
             'Checkout Page',
@@ -78,37 +74,35 @@ class _CheckoutPageState extends State<CheckoutPage> {
         ),
         body: Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ListView.builder(
-                    itemCount: productProvider.getCartModelListlength,
-                    itemBuilder: (context, index) {
-                     
-                      return CartSingleProduct(
-                        isCount: false,
-                          name: productProvider.cartModelList[index].name,
-                          image: productProvider.cartModelList[index].image,
-                          price: productProvider.cartModelList[index].price,
-                          quantity:
-                              productProvider.cartModelList[index].quantity!);
-                    }),
-                Container(
-                  height: 300,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _buildBottomDetails(
-                          startName: 'Your Price', endName: "ksh 40"),
-                      _buildBottomDetails(startName: 'Discount', endName: "2%"),
-                      _buildBottomDetails(
-                          startName: 'Shipping', endName: "ksh 100"),
-                      _buildBottomDetails(
-                          startName: 'Total', endName: "ksh 138"),
-                    ],
-                  ),
-                )
-              ],
-            )));
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              ListView.builder(
+                // scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: productProvider.getCartModelListlength,
+                itemBuilder: (context, index) {
+                  return CartSingleProduct(
+                      name: productProvider.cartModelList[index].name,
+                      image: productProvider.cartModelList[index].image,
+                      price: productProvider.cartModelList[index].price,
+                      quantity: productProvider.cartModelList[index].quantity!);
+                },
+              ),
+              Container(
+                color: Colors.blue,
+                height: 100,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildBottomDetails(
+                        startName: 'Your Price', endName: "ksh 40"),
+                    _buildBottomDetails(startName: 'Discount', endName: "2%"),
+                    _buildBottomDetails(
+                        startName: 'Shipping', endName: "ksh 100"),
+                    _buildBottomDetails(startName: 'Total', endName: "ksh 138"),
+                  ],
+                ),
+              ),
+            ])));
   }
 }
