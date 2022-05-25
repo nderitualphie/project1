@@ -1,3 +1,5 @@
+import 'package:app2/views/commerce/cart_page.dart';
+
 import 'homepage.dart';
 import 'provider/product_provider.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +32,6 @@ class _DetailViewState extends State<DetailView> {
             Container(
               height: 60,
               width: 320,
-              //color: Colors.green,
               child: ElevatedButton(
                 onPressed: () {
                   productProvider.getCartData(
@@ -38,6 +39,9 @@ class _DetailViewState extends State<DetailView> {
                       name: widget.name,
                       quantity: count,
                       price: widget.price);
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => CartPage(),
+                  ));
                 },
                 child: const Text(
                   'Proceed to Check out',

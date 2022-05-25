@@ -1,27 +1,30 @@
+import 'package:app2/views/commerce/homepage.dart';
 import 'package:flutter/material.dart';
 
 class CartSingleProduct extends StatefulWidget {
   final String? name;
   final String? image;
-  final int quantity;
+  int quantity;
   final int? price;
-   CartSingleProduct(
-      {Key? key, required this.name, required this.image, required this.price, required this.quantity})
+  final bool isCount;
+  CartSingleProduct(
+      {Key? key,
+      required this.name,
+      required this.image,
+      required this.price,
+      required this.quantity,
+      required this.isCount})
       : super(key: key);
 
   @override
   State<CartSingleProduct> createState() => _CartSingleProductState();
-   
-   
 }
 
 class _CartSingleProductState extends State<CartSingleProduct> {
-
   @override
   Widget build(BuildContext context) {
-    
-  int count = 1;
-      count= widget.quantity;
+    int count = 1;
+
     return Container(
       height: 180,
       width: double.infinity,
@@ -36,19 +39,18 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage('lib/images/${widget.image}'),
+                        image: NetworkImage(widget.image!),
                       ),
                     )),
                 Container(
-                    height: 160,
-                    width: 202,
+                    height: 140,
+                    width: 150,
                     child: ListTile(
                       title: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(widget.name!),
-                            
                             Text(
                               "ksh ${widget.price.toString()}",
                               style: const TextStyle(
@@ -58,7 +60,7 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                               ),
                             ),
                             Column(
-                              children: const [
+                              children: [
                                 Text(
                                   'Quantity',
                                   style: TextStyle(
@@ -69,26 +71,26 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                             ),
                             Container(
                               height: 50,
-                              width: 100,
+                              width: widget.isCount == false ? 100 : 80,
                               decoration: BoxDecoration(
                                   color: Colors.green,
                                   borderRadius: BorderRadius.circular(20)),
-                              child: Row(
+                              child: widget.isCount ==false?
+                              Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   GestureDetector(
                                       onTap: () {
                                         setState(() {
-                                          if (count > 1) {
-                                            
-                                            count--;
+                                          if (widget.quantity > 1) {
+                                            widget.quantity--;
                                           }
                                         });
                                       },
                                       child: const Icon(Icons.remove)),
                                   Text(
-                                    count.toString(),
+                                    widget.quantity.toString(),
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20),
@@ -96,16 +98,21 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                                   GestureDetector(
                                       onTap: () {
                                         setState(() {
-                                          count++;
+                                          widget.quantity++;
+                                          // productProvider.getCountData(
+                                          //     count = widget.quantity);
                                         });
                                       },
                                       child: const Icon(Icons.add)),
-                                ],
-                              ),
-                            ),
-                          ]),
-                    ))
-              ],
+                                ]
+                                ),)          
+                      
+                      ],
+              
+                    ),
+            
+            ),
+            )],
             ),
           ],
         ),

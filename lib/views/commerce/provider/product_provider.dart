@@ -26,7 +26,42 @@ class ProductProvider with ChangeNotifier {
   int get getCartModelListlength {
     return cartModelList.length;
   }
+ List<CartModel> checkOutModelList = [];
+  late CartModel checkOutModel;
+ void deleteCheckoutProduct(int index) {
+    checkOutModelList.removeAt(index);
+    notifyListeners();
+  }
 
+  void clearCheckoutProduct() {
+    checkOutModelList.clear();
+    notifyListeners();
+  }
+
+  void getCheckOutData({
+    int? quantity,
+    int? price,
+    String? name,
+    
+    String? image,
+  }) {
+    checkOutModel = CartModel(
+     
+      price: price,
+      name: name,
+      image: image,
+      quantity: quantity,
+    );
+    checkOutModelList.add(checkOutModel);
+  }
+
+  List<CartModel> get getCheckOutModelList {
+    return List.from(checkOutModelList);
+  }
+
+  int get getCheckOutModelListLength {
+    return checkOutModelList.length;
+  }
   List<Product> feature = [];
   late Product featuredata;
   Future<void> getfeaturedata() async {

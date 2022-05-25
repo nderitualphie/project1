@@ -1,5 +1,4 @@
-
-
+import 'package:app2/views/commerce/checkout_page.dart';
 import 'package:provider/provider.dart';
 
 import 'cartsingle_product.dart';
@@ -29,7 +28,10 @@ class _CartPageState extends State<CartPage> {
           width: 80,
           margin: const EdgeInsets.all(10),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => CheckoutPage()));
+            },
             child: const Text(
               'Continue',
               style: TextStyle(
@@ -68,12 +70,12 @@ class _CartPageState extends State<CartPage> {
         body: ListView.builder(
           itemCount: productProvider.getCartModelListlength,
           itemBuilder: (context, index) => CartSingleProduct(
-              image: productProvider.getCartModelList[index].image,
-              price: productProvider.getCartModelList[index].price,
-              name: productProvider.getCartModelList[index].name,
-              quantity: productProvider.getCartModelList[index].quantity!,),
-              
-              
+            isCount: false,
+            image: productProvider.getCartModelList[index].image,
+            price: productProvider.getCartModelList[index].price,
+            name: productProvider.getCartModelList[index].name,
+            quantity: productProvider.getCartModelList[index].quantity!,
+          ),
         ));
   }
 }
