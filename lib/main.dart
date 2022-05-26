@@ -1,4 +1,5 @@
 import 'package:app2/login.dart';
+import 'package:app2/views/commerce/profile_page.dart';
 import 'package:app2/views/commerce/provider/product_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -33,16 +34,17 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
             primaryColor: Colors.green,
           ),
-          home: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Register();
-              } else {
-                return LoginPage();
-              }
-            },
-          ),
+          home: DefaultPage(),
+          // home: StreamBuilder(
+          //   stream: FirebaseAuth.instance.authStateChanges(),
+          //   builder: (context, snapshot) {
+          //     if (snapshot.hasData) {
+          //       return DefaultPage();
+          //     } else {
+          //       return LoginPage();
+          //     }
+          //   },
+          // ),
         ));
   }
 }

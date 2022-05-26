@@ -33,7 +33,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   @override
   Widget build(BuildContext context) {
+    int subtotal = 0;
+    int shipping = 100;
+    int total;
     productProvider = Provider.of<ProductProvider>(context);
+    productProvider.getCheckOutModelList.forEach(
+      (element) {
+        subtotal += element.price! * element.quantity!;
+      },
+    );
+    total = subtotal + shipping;
     return Scaffold(
         bottomNavigationBar: Container(
           height: 55,
@@ -73,20 +82,22 @@ class _CheckoutPageState extends State<CheckoutPage> {
           ),
         ),
         body: Container(
+          height: 500,
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             ListView.builder(
-              physics: ScrollPhysics(),
+              //physics: ScrollPhysics(),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: productProvider.getCartModelListlength,
+              itemCount: productProvider.getCheckOutModelListLength,
               itemBuilder: (context, index) {
                 return CartSingleProduct(
-                    name: productProvider.cartModelList[index].name,
-                    image: productProvider.cartModelList[index].image,
-                    price: productProvider.cartModelList[index].price,
-                    quantity: productProvider.cartModelList[index].quantity!);
+                    name: productProvider.getCheckOutModelList[index].name,
+                    image: productProvider.getCheckOutModelList[index].image,
+                    price: productProvider.getCheckOutModelList[index].price,
+                    quantity:
+                        productProvider.getCheckOutModelList[index].quantity!);
               },
             ),
             Container(
@@ -95,11 +106,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _buildBottomDetails(
-                      startName: 'Your Price', endName: "ksh 40"),
-                  _buildBottomDetails(startName: 'Discount', endName: "2%"),
+                      startName: 'Sub Total',
+                      endName: "ksh ${subtotal.toString()}"),
                   _buildBottomDetails(
-                      startName: 'Shipping', endName: "ksh 100"),
-                  _buildBottomDetails(startName: 'Total', endName: "ksh 138"),
+                      startName: 'Shipping',
+                      endName: "ksh ${shipping.toString()}"),
+                  _buildBottomDetails(
+                      startName: 'Total', endName: "ksh ${total.toString()}"),
                 ],
               ),
             ),

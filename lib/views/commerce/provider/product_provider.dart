@@ -6,6 +6,8 @@ import '../../../model/cartmodel.dart';
 import '../../../model/product.dart';
 
 class ProductProvider with ChangeNotifier {
+  
+
   List<CartModel> cartModelList = [];
   late CartModel cartmodel;
   void getCartData({

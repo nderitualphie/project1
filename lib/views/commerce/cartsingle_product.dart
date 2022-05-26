@@ -1,20 +1,21 @@
 import 'package:app2/views/commerce/homepage.dart';
+import 'package:app2/views/commerce/provider/product_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CartSingleProduct extends StatefulWidget {
   final String? name;
   final String? image;
   int quantity;
   final int? price;
-  
-  CartSingleProduct(
-      {Key? key,
-      required this.name,
-      required this.image,
-      required this.price,
-      required this.quantity,
-     })
-      : super(key: key);
+
+  CartSingleProduct({
+    Key? key,
+    required this.name,
+    required this.image,
+    required this.price,
+    required this.quantity,
+  }) : super(key: key);
 
   @override
   State<CartSingleProduct> createState() => _CartSingleProductState();
@@ -23,7 +24,12 @@ class CartSingleProduct extends StatefulWidget {
 class _CartSingleProductState extends State<CartSingleProduct> {
   @override
   Widget build(BuildContext context) {
-   
+    productProvider = Provider.of<ProductProvider>(context);
+    productProvider.getCheckOutData(
+        quantity: widget.quantity,
+        image: widget.image,
+        name: widget.name,
+        price: widget.price);
 
     return Container(
       height: 180,
@@ -43,40 +49,40 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                       ),
                     )),
                 Container(
-                    height: 140,
-                    width: 150,
-                    child: ListTile(
-                      title: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  height: 140,
+                  width: 150,
+                  child: ListTile(
+                    title: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(widget.name!),
+                        Text(
+                          "ksh ${widget.price.toString()}",
+                          style: const TextStyle(
+                            color: Colors.green,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(widget.name!),
                             Text(
-                              "ksh ${widget.price.toString()}",
-                              style: const TextStyle(
+                              'Quantity',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Text(widget.quantity.toString())
+                          ],
+                        ),
+                        Container(
+                            height: 50,
+                            width: 100,
+                            decoration: BoxDecoration(
                                 color: Colors.green,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  'Quantity',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              height: 50,
-                              width:  100 ,
-                              decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  borderRadius: BorderRadius.circular(20)),
-                              child:
-                              Row(
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
@@ -85,6 +91,11 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                                         setState(() {
                                           if (widget.quantity > 1) {
                                             widget.quantity--;
+                                            productProvider.getCheckOutData(
+                                                quantity: widget.quantity,
+                                                image: widget.image,
+                                                name: widget.name,
+                                                price: widget.price);
                                           }
                                         });
                                       },
@@ -99,20 +110,20 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                                       onTap: () {
                                         setState(() {
                                           widget.quantity++;
-                                          // productProvider.getCountData(
-                                          //     count = widget.quantity);
+                                          productProvider.getCheckOutData(
+                                              quantity: widget.quantity,
+                                              image: widget.image,
+                                              name: widget.name,
+                                              price: widget.price);
                                         });
                                       },
                                       child: const Icon(Icons.add)),
-                                ]
-                                )          
-                      
-                      )],
-              
+                                ]))
+                      ],
                     ),
-            
-            ),
-            )],
+                  ),
+                )
+              ],
             ),
           ],
         ),
