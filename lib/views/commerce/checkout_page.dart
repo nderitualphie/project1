@@ -82,17 +82,19 @@ class _CheckoutPageState extends State<CheckoutPage> {
           ),
         ),
         body: Container(
-          height: 500,
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             ListView.builder(
+              primary: false,
               //physics: ScrollPhysics(),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemCount: productProvider.getCheckOutModelListLength,
               itemBuilder: (context, index) {
                 return CartSingleProduct(
+                    isCount: true,
+                    index: index,
                     name: productProvider.getCheckOutModelList[index].name,
                     image: productProvider.getCheckOutModelList[index].image,
                     price: productProvider.getCheckOutModelList[index].price,

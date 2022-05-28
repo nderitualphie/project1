@@ -8,6 +8,8 @@ class CartSingleProduct extends StatefulWidget {
   final String? image;
   int quantity;
   final int? price;
+  final int index;
+  final bool isCount;
 
   CartSingleProduct({
     Key? key,
@@ -15,6 +17,8 @@ class CartSingleProduct extends StatefulWidget {
     required this.image,
     required this.price,
     required this.quantity,
+    required this.index,
+    required this.isCount,
   }) : super(key: key);
 
   @override
@@ -25,6 +29,7 @@ class _CartSingleProductState extends State<CartSingleProduct> {
   @override
   Widget build(BuildContext context) {
     productProvider = Provider.of<ProductProvider>(context);
+
     productProvider.getCheckOutData(
         quantity: widget.quantity,
         image: widget.image,
@@ -50,13 +55,30 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                     )),
                 Container(
                   height: 140,
-                  width: 150,
+                  width: 170,
                   child: ListTile(
                     title: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(widget.name!),
+                        Container(
+                          height: 20,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(widget.name!),
+                              IconButton(
+                                  onPressed: () {
+                                    widget.isCount == false
+                                        ? productProvider
+                                            .deleteCartProduct(widget.index)
+                                        : productProvider.deleteCheckoutProduct(
+                                            widget.index);
+                                  },
+                                  icon: Icon(Icons.delete))
+                            ],
+                          ),
+                        ),
                         Text(
                           "ksh ${widget.price.toString()}",
                           style: const TextStyle(
@@ -65,60 +87,77 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Quantity',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                            Text(widget.quantity.toString())
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Text(
+                        //       'Quantity',
+                        //       style: TextStyle(
+                        //           fontSize: 16, fontWeight: FontWeight.bold),
+                        //     ),
+                        //   ],
+                        // ),
                         Container(
-                            height: 50,
-                            width: 100,
-                            decoration: BoxDecoration(
-                                color: Colors.green,
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          if (widget.quantity > 1) {
-                                            widget.quantity--;
-                                            productProvider.getCheckOutData(
-                                                quantity: widget.quantity,
-                                                image: widget.image,
-                                                name: widget.name,
-                                                price: widget.price);
-                                          }
-                                        });
-                                      },
-                                      child: const Icon(Icons.remove)),
-                                  Text(
-                                    widget.quantity.toString(),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
-                                  ),
-                                  GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          widget.quantity++;
-                                          productProvider.getCheckOutData(
-                                              quantity: widget.quantity,
-                                              image: widget.image,
-                                              name: widget.name,
-                                              price: widget.price);
-                                        });
-                                      },
-                                      child: const Icon(Icons.add)),
-                                ]))
+                          height: 50,
+                          width: widget.isCount == false ? 150 : 120,
+                          decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: widget.isCount == false
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                      GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              if (widget.quantity > 1) {
+                                                widget.quantity--;
+                                                productProvider.getCheckOutData(
+                                                    quantity: widget.quantity,
+                                                    image: widget.image,
+                                                    name: widget.name,
+                                                    price: widget.price);
+                                              }
+                                            });
+                                          },
+                                          child: const Icon(Icons.remove)),
+                                      Text(
+                                        widget.quantity.toString(),
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                      ),
+                                      GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              widget.quantity++;
+                                              productProvider.getCheckOutData(
+                                                  quantity: widget.quantity,
+                                                  image: widget.image,
+                                                  name: widget.name,
+                                                  price: widget.price);
+                                            });
+                                          },
+                                          child: const Icon(Icons.add)),
+                                    ])
+                              : Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Quantity',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    ),
+                                    Text(widget.quantity.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16))
+                                  ],
+                                ),
+                        )
                       ],
                     ),
                   ),

@@ -1,4 +1,6 @@
+import 'package:app2/model/usermodel.dart';
 import 'package:app2/views/commerce/notifications.dart';
+import 'package:app2/views/commerce/profile_page.dart';
 import 'package:app2/views/commerce/provider/product_provider.dart';
 import 'package:app2/views/commerce/singleproducts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -197,6 +199,7 @@ class _DefaultPageState extends State<DefaultPage> {
   bool aboutColor = false;
 
   bool contactUsColor = false;
+  bool profileColor = false;
 
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   Widget _buildImageSlider() {
@@ -222,7 +225,8 @@ class _DefaultPageState extends State<DefaultPage> {
   Widget _buildMyDrawer() {
     return Drawer(
       child: ListView(children: [
-        const UserAccountsDrawerHeader(
+        _buildUserAccountsDrawer(),
+        UserAccountsDrawerHeader(
           accountName: Text(
             'Aliphonza',
             style: TextStyle(color: Colors.black),
@@ -232,8 +236,30 @@ class _DefaultPageState extends State<DefaultPage> {
             backgroundImage: AssetImage("lib/images/beetroot.jpg"),
           ),
           decoration: BoxDecoration(color: Colors.green),
-          accountEmail: Text('aliphonzanderitu@gmail.com',
-              style: TextStyle(color: Colors.black)),
+          accountEmail:
+              Text("alphie@gmail", style: TextStyle(color: Colors.black)),
+        ),
+        ListTile(
+          selected: profileColor,
+          onTap: () {
+            setState(() {
+              aboutColor = false;
+              homeColor = false;
+              cartColor = false;
+              contactUsColor = false;
+              profileColor = true;
+            });
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => ProfilePage()));
+          },
+          leading: const Icon(
+            Icons.person,
+            color: Colors.black,
+          ),
+          title: const Text(
+            'Profile',
+            style: TextStyle(color: Colors.black),
+          ),
         ),
         ListTile(
           selected: homeColor,
@@ -243,6 +269,7 @@ class _DefaultPageState extends State<DefaultPage> {
               contactUsColor = false;
               cartColor = false;
               aboutColor = false;
+              profileColor = false;
             });
           },
           leading: const Icon(
@@ -262,6 +289,7 @@ class _DefaultPageState extends State<DefaultPage> {
               homeColor = false;
               aboutColor = false;
               contactUsColor = false;
+              profileColor = false;
             });
           },
           leading: const Icon(
@@ -281,6 +309,7 @@ class _DefaultPageState extends State<DefaultPage> {
               homeColor = false;
               cartColor = false;
               contactUsColor = false;
+              profileColor = false;
             });
           },
           leading: const Icon(
@@ -300,6 +329,7 @@ class _DefaultPageState extends State<DefaultPage> {
               cartColor = false;
               homeColor = false;
               aboutColor = false;
+              profileColor = false;
             });
           },
           leading: const Icon(
@@ -328,6 +358,25 @@ class _DefaultPageState extends State<DefaultPage> {
     );
   }
 
+  Widget _buildUserAccountsDrawer() {
+    List<UserModel> userModel = productProvider.getUserModelList;
+    return Column(
+        children: userModel.map((e) {
+      return UserAccountsDrawerHeader(
+        accountName: Text(
+          'Aliphonza',
+          style: TextStyle(color: Colors.black),
+        ),
+        currentAccountPicture: CircleAvatar(
+          radius: 50,
+          backgroundImage: AssetImage("lib/images/beetroot.jpg"),
+        ),
+        decoration: BoxDecoration(color: Colors.green),
+        accountEmail: Text(e.email, style: TextStyle(color: Colors.black)),
+      );
+    }).toList());
+  }
+
   @override
   Widget build(BuildContext context) {
     productProvider = Provider.of<ProductProvider>(context);
@@ -335,6 +384,7 @@ class _DefaultPageState extends State<DefaultPage> {
     productProvider.getfeaturedata();
     productProvider.gethomeArrivaldata();
     productProvider.getHomeFeatureData();
+    productProvider.getUserdata();
 
     return Scaffold(
         key: _key,

@@ -65,6 +65,8 @@ class _CartPageState extends State<CartPage> {
         body: ListView.builder(
           itemCount: productProvider.getCartModelListlength,
           itemBuilder: (context, index) => CartSingleProduct(
+            isCount: false,
+            index: index,
             image: productProvider.getCartModelList[index].image,
             price: productProvider.getCartModelList[index].price,
             name: productProvider.getCartModelList[index].name,

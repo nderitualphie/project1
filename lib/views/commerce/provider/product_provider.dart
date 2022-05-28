@@ -1,12 +1,41 @@
 import 'dart:core';
+import 'package:app2/model/usermodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../model/cartmodel.dart';
 import '../../../model/product.dart';
 
 class ProductProvider with ChangeNotifier {
-  
+  late UserModel userModel;
+  List<UserModel> userModelList = [];
+  Future<void> getUserdata() async {
+    List<UserModel> newList = [];
+    User currentUser = FirebaseAuth.instance.currentUser!;
+    QuerySnapshot userDatasnapshot =
+        await FirebaseFirestore.instance.collection('user').get();
+    userDatasnapshot.docs.forEach(
+      (element) {
+        if (currentUser.uid == element.data().toString().contains("userId")) {
+          userModel = UserModel(
+            email: element.data().toString().contains('email')
+                ? element["email"]
+                : '',
+            phoneNo: element.data().toString().contains('phoneNo')
+                ? element["phoneNo"]
+                : '',
+          );
+          newList.add(userModel);
+        }
+        userModelList = newList;
+      },
+    );
+  }
+
+  List<UserModel> get getUserModelList {
+    return userModelList;
+  }
 
   List<CartModel> cartModelList = [];
   late CartModel cartmodel;
@@ -31,15 +60,6 @@ class ProductProvider with ChangeNotifier {
 
   List<CartModel> checkOutModelList = [];
   late CartModel checkOutModel;
-  void deleteCheckoutProduct(int index) {
-    checkOutModelList.removeAt(index);
-    notifyListeners();
-  }
-
-  void clearCheckoutProduct() {
-    checkOutModelList.clear();
-    notifyListeners();
-  }
 
   void getCheckOutData({
     int? quantity,
@@ -174,5 +194,20 @@ class ProductProvider with ChangeNotifier {
 
   int get getnotificationsList {
     return notificationList.length;
+  }
+
+  void deleteCheckoutProduct(int index) {
+    checkOutModelList.removeAt(index);
+    notifyListeners();
+  }
+
+  void clearCheckoutProduct() {
+    checkOutModelList.clear();
+    notifyListeners();
+  }
+
+  void deleteCartProduct(int index) {
+    cartModelList.removeAt(index);
+    notifyListeners();
   }
 }

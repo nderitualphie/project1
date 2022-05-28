@@ -13,12 +13,15 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   _RegisterState();
+  String? email;
+  String? password;
+  String? phoneNo;
 
   bool showProgress = false;
   bool visible = false;
   final _formkey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
-  CollectionReference ref = FirebaseFirestore.instance.collection('users');
+  //CollectionReference ref = FirebaseFirestore.instance.collection('users');
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmpassController = TextEditingController();
   final TextEditingController name = TextEditingController();
@@ -93,7 +96,11 @@ class _RegisterState extends State<Register> {
                               return null;
                             }
                           },
-                          onChanged: (value) {},
+                          onChanged: (value) {
+                            setState(() {
+                              value = email!;
+                            });
+                          },
                           keyboardType: TextInputType.emailAddress,
                         ),
                         SizedBox(
@@ -138,7 +145,11 @@ class _RegisterState extends State<Register> {
                               return null;
                             }
                           },
-                          onChanged: (value) {},
+                          onChanged: (value) {
+                            setState(() {
+                              value = password!;
+                            });
+                          },
                         ),
                         SizedBox(
                           height: 20,
@@ -186,15 +197,20 @@ class _RegisterState extends State<Register> {
                         ),
                         // TextFormField(
                         //   controller: phoneNocontroller,
+                        //   keyboardType: TextInputType.phone,
                         //   validator: (value) {
                         //     if (value == "") {
                         //       return "Please enter your phone number ";
                         //     } else if (value!.length < 10) {
-                        //       return "Phone number must be 11 digits ";
+                        //       return "Phone number must be 10 digits ";
                         //     }
                         //     return "";
                         //   },
-                        //   onChanged: (value) {},
+                        //   onChanged: (value) {
+                        //     setState(() {
+                        //       value = phoneNo!;
+                        //     });
+                        //   },
                         //   decoration: InputDecoration(
                         //     hintText: "Enter your phone Number",
                         //     contentPadding: const EdgeInsets.only(
@@ -212,9 +228,9 @@ class _RegisterState extends State<Register> {
                         //     ),
                         //   ),
                         // ),
-                        // SizedBox(
-                        //   height: 40,
-                        // ),
+                        SizedBox(
+                          height: 40,
+                        ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -298,6 +314,14 @@ class _RegisterState extends State<Register> {
                     ),
                   )
                 });
+        FirebaseFirestore.instance
+            .collection("user")
+            .doc(userCredential.user!.uid)
+            .set({
+          "userId": userCredential.user!.uid,
+          "email": email,
+          "phoneNo": phoneNo,
+        });
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           print('The password provided is too weak.');

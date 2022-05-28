@@ -1,5 +1,12 @@
+import 'package:app2/model/usermodel.dart';
 import 'package:app2/views/commerce/notifications.dart';
+import 'package:app2/views/commerce/provider/product_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({Key? key}) : super(key: key);
@@ -9,6 +16,23 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  late ProductProvider productProvider;
+  late File? pickedimage;
+  late PickedFile? image;
+  Future<void> getImage() async {
+    image = await ImagePicker().getImage(source: ImageSource.gallery);
+    pickedimage = File(image!.path);
+  }
+
+  String? imageUrl;
+  void _uploadImage({required File image}) async {
+    User user = FirebaseAuth.instance.currentUser!;
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference ref = storage.ref().child("userImage/${user.uid}");
+    UploadTask uploadTask = ref.putFile(image);
+    imageUrl = await uploadTask.then((res) => res.ref.getDownloadURL());
+  }
+
   Widget _buildSingleTextFormField({required String name}) {
     return TextFormField(
       decoration: InputDecoration(
@@ -45,9 +69,47 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   bool edit = false;
+  Widget _buildSinglecontainerx() {
+    List<UserModel> userModel = productProvider.getUserModelList;
+    return Column(
+        children: userModel.map((e) {
+      return Column(children: [
+        Column(
+          children: [
+            _buildSingleContainer(
+                startText: "Name :", endText: "Aliphonza Nderitu"),
+            _buildSingleContainer(startText: "Email :", endText: e.email),
+            _buildSingleContainer(
+                startText: "Phone number :", endText: e.phoneNo)
+          ],
+        ),
+      ]);
+    }).toList());
+  }
+
+  Widget _buildTextformFieldx() {
+    List<UserModel> userModel = productProvider.getUserModelList;
+    return Column(
+        children: userModel.map((e) {
+      return Column(children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _buildSingleTextFormField(name: "Aliphonza"),
+            _buildSingleTextFormField(name: e.email),
+            _buildSingleTextFormField(name: e.phoneNo)
+          ],
+        ),
+      ]);
+    }).toList());
+  }
 
   @override
   Widget build(BuildContext context) {
+    productProvider = Provider.of<ProductProvider>(context);
+    List<UserModel> userModel = productProvider.getUserModelList;
+    productProvider.getUserdata();
+
     return Scaffold(
       bottomNavigationBar: Container(
         height: 55,
@@ -88,7 +150,12 @@ class _ProfilePageState extends State<ProfilePage> {
           edit == false
               ? NotificationButton()
               : IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _uploadImage(image: pickedimage!);
+                    setState(() {
+                      edit = false;
+                    });
+                  },
                   icon: Icon(
                     Icons.check,
                     color: Colors.black,
@@ -111,9 +178,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     CircleAvatar(
-                      maxRadius: 80,
-                      backgroundImage: AssetImage("lib/images/beetroot.jpg"),
-                    ),
+                        maxRadius: 80,
+                        backgroundImage: pickedimage == null
+                            ? AssetImage("lib/images/beetroot.jpg")
+                                as ImageProvider
+                            : FileImage(pickedimage!)),
                   ],
                 ),
               ),
@@ -122,11 +191,16 @@ class _ProfilePageState extends State<ProfilePage> {
                       padding: const EdgeInsets.only(left: 220, top: 100),
                       child: Card(
                         color: Colors.transparent,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.green,
-                          child: Icon(
-                            Icons.edit,
-                            color: Colors.black,
+                        child: GestureDetector(
+                          onTap: (() {
+                            getImage();
+                          }),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.green,
+                            child: Icon(
+                              Icons.camera_alt,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ),
@@ -137,30 +211,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: 300,
                 width: double.infinity,
                 child: edit == true
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          _buildSingleTextFormField(name: "Aliphonza Nderitu"),
-                          _buildSingleTextFormField(
-                              name: "aliphonzanderitu@gmail.com"),
-                          _buildSingleTextFormField(name: "0791784445")
-                        ],
-                      )
-                    : Column(children: [
-                        Column(
-                          children: [
-                            _buildSingleContainer(
-                                startText: "Name :",
-                                endText: "Aliphonza Nderitu"),
-                            _buildSingleContainer(
-                                startText: "Email :",
-                                endText: "aliphonzanderitu@gmail.com"),
-                            _buildSingleContainer(
-                                startText: "Phone number :",
-                                endText: "0791784445")
-                          ],
-                        ),
-                      ])),
+                    ? _buildTextformFieldx()
+                    : _buildSinglecontainerx()),
           ],
         ),
       ),
