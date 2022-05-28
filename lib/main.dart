@@ -34,16 +34,17 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
             primaryColor: Colors.green,
           ),
-          home: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return DefaultPage();
-              } else {
-                return LoginPage();
-              }
-            },
-          ),
+          home: Register(),
+          // home: StreamBuilder(
+          //   stream: FirebaseAuth.instance.authStateChanges(),
+          //   builder: (context, snapshot) {
+          //     if (snapshot.hasData) {
+          //       return DefaultPage();
+          //     } else {
+          //       return LoginPage();
+          //     }
+          //   },
+          // ),
         ));
   }
 }

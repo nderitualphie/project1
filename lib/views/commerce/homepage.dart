@@ -364,7 +364,7 @@ class _DefaultPageState extends State<DefaultPage> {
         children: userModel.map((e) {
       return UserAccountsDrawerHeader(
         accountName: Text(
-          'Aliphonza',
+          "Aliphonza Nderitu",
           style: TextStyle(color: Colors.black),
         ),
         currentAccountPicture: CircleAvatar(

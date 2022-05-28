@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'login.dart';
 
@@ -13,9 +14,6 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   _RegisterState();
-  String? email;
-  String? password;
-  String? phoneNo;
 
   bool showProgress = false;
   bool visible = false;
@@ -24,9 +22,10 @@ class _RegisterState extends State<Register> {
   //CollectionReference ref = FirebaseFirestore.instance.collection('users');
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmpassController = TextEditingController();
-  final TextEditingController name = TextEditingController();
+  final TextEditingController userNamecontroller = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneNocontroller = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
   bool _isObscure = true;
   bool _isObscure2 = true;
   File? file;
@@ -57,14 +56,35 @@ class _RegisterState extends State<Register> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
-                            fontSize: 40,
+                            fontSize: 30,
                           ),
                         ),
                         SizedBox(
                           height: 10,
                         ),
+                        TextFormField(
+                          controller: userNamecontroller,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Enter username',
+                            enabled: true,
+                            contentPadding: const EdgeInsets.only(
+                                left: 14.0, bottom: 8.0, top: 8.0),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.green),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.green),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          onChanged: (value) {},
+                          keyboardType: TextInputType.name,
+                        ),
                         SizedBox(
-                          height: 50,
+                          height: 20,
                         ),
                         TextFormField(
                           controller: emailController,
@@ -96,11 +116,7 @@ class _RegisterState extends State<Register> {
                               return null;
                             }
                           },
-                          onChanged: (value) {
-                            setState(() {
-                              value = email!;
-                            });
-                          },
+                          onChanged: (value) {},
                           keyboardType: TextInputType.emailAddress,
                         ),
                         SizedBox(
@@ -145,11 +161,7 @@ class _RegisterState extends State<Register> {
                               return null;
                             }
                           },
-                          onChanged: (value) {
-                            setState(() {
-                              value = password!;
-                            });
-                          },
+                          onChanged: (value) {},
                         ),
                         SizedBox(
                           height: 20,
@@ -195,41 +207,57 @@ class _RegisterState extends State<Register> {
                         SizedBox(
                           height: 20,
                         ),
-                        // TextFormField(
-                        //   controller: phoneNocontroller,
-                        //   keyboardType: TextInputType.phone,
-                        //   validator: (value) {
-                        //     if (value == "") {
-                        //       return "Please enter your phone number ";
-                        //     } else if (value!.length < 10) {
-                        //       return "Phone number must be 10 digits ";
-                        //     }
-                        //     return "";
-                        //   },
-                        //   onChanged: (value) {
-                        //     setState(() {
-                        //       value = phoneNo!;
-                        //     });
-                        //   },
-                        //   decoration: InputDecoration(
-                        //     hintText: "Enter your phone Number",
-                        //     contentPadding: const EdgeInsets.only(
-                        //         left: 14.0, bottom: 8.0, top: 15.0),
-                        //     hintStyle: TextStyle(color: Colors.black),
-                        //     enabled: true,
-                        //     filled: true,
-                        //     focusedBorder: OutlineInputBorder(
-                        //       borderSide: BorderSide(color: Colors.green),
-                        //       borderRadius: BorderRadius.circular(20),
-                        //     ),
-                        //     enabledBorder: UnderlineInputBorder(
-                        //       borderSide: BorderSide(color: Colors.green),
-                        //       borderRadius: BorderRadius.circular(20),
-                        //     ),
-                        //   ),
-                        // ),
+                        TextFormField(
+                          controller: phoneNocontroller,
+                          // validator: (value) {
+                          //   if (value == "") {
+                          //     return "Please enter your phone number ";
+                          //   } else if (value!.length < 9) {
+                          //     return "Please enter a valid phone number ";
+                          //   }
+                          //   return "";
+                          // },
+                          onChanged: (value) {},
+                          decoration: InputDecoration(
+                            hintText: "Enter your phone Number",
+                            prefixText: "+254",
+                            contentPadding: const EdgeInsets.only(
+                                left: 14.0, bottom: 8.0, top: 15.0),
+                            hintStyle: TextStyle(color: Colors.black),
+                            enabled: true,
+                            filled: true,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.green),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.green),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
                         SizedBox(
-                          height: 40,
+                          height: 20,
+                        ),
+                        TextFormField(
+                          controller: addressController,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Enter your address',
+                            enabled: true,
+                            contentPadding: const EdgeInsets.only(
+                                left: 14.0, bottom: 8.0, top: 8.0),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.green),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.green),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          onChanged: (value) {},
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -314,13 +342,18 @@ class _RegisterState extends State<Register> {
                     ),
                   )
                 });
+
+        print(emailController.text);
         FirebaseFirestore.instance
             .collection("user")
             .doc(userCredential.user!.uid)
             .set({
           "userId": userCredential.user!.uid,
-          "email": email,
-          "phoneNo": phoneNo,
+          "email": emailController.text,
+          "phoneNo": phoneNocontroller.text,
+          //"userImage": ,
+          "userName": userNamecontroller.text,
+          "address": addressController.text,
         });
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {

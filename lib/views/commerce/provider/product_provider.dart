@@ -19,6 +19,12 @@ class ProductProvider with ChangeNotifier {
       (element) {
         if (currentUser.uid == element.data().toString().contains("userId")) {
           userModel = UserModel(
+            userImage: element.data().toString().contains('userImage')
+                ? element["userImage"]
+                : '',
+            userName: element.data().toString().contains('userName')
+                ? element["userName"]
+                : '',
             email: element.data().toString().contains('email')
                 ? element["email"]
                 : '',
