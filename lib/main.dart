@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
             primaryColor: Colors.green,
           ),
-          home: Register(),
+          home: DefaultPage(),
           // home: StreamBuilder(
           //   stream: FirebaseAuth.instance.authStateChanges(),
           //   builder: (context, snapshot) {

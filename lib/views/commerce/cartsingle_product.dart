@@ -32,9 +32,9 @@ class _CartSingleProductState extends State<CartSingleProduct> {
 
     productProvider.getCheckOutData(
         quantity: widget.quantity,
-        image: widget.image,
-        name: widget.name,
-        price: widget.price);
+        image: widget.image!,
+        name: widget.name!,
+        price: widget.price!);
 
     return Container(
       height: 180,
@@ -55,7 +55,7 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                     )),
                 Container(
                   height: 140,
-                  width: 170,
+                  width: 200,
                   child: ListTile(
                     title: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -63,10 +63,14 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                       children: [
                         Container(
                           height: 20,
+                          width: widget.isCount == false ? 180 : 180,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(widget.name!),
+                              Text(
+                                widget.name!,
+                                style: TextStyle(fontSize: 14),
+                              ),
                               IconButton(
                                   onPressed: () {
                                     widget.isCount == false
@@ -75,15 +79,18 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                                         : productProvider.deleteCheckoutProduct(
                                             widget.index);
                                   },
-                                  icon: Icon(Icons.delete))
+                                  icon: Icon(
+                                    Icons.delete,
+                                    size: 20,
+                                  ))
                             ],
                           ),
                         ),
                         Text(
                           "ksh ${widget.price.toString()}",
                           style: const TextStyle(
-                            color: Colors.green,
-                            fontSize: 18,
+                            color: Colors.black,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -99,7 +106,7 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                         // ),
                         Container(
                           height: 50,
-                          width: widget.isCount == false ? 150 : 120,
+                          width: 120,
                           decoration: BoxDecoration(
                               color: Colors.green,
                               borderRadius: BorderRadius.circular(20)),
@@ -115,9 +122,9 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                                                 widget.quantity--;
                                                 productProvider.getCheckOutData(
                                                     quantity: widget.quantity,
-                                                    image: widget.image,
-                                                    name: widget.name,
-                                                    price: widget.price);
+                                                    image: widget.image!,
+                                                    name: widget.name!,
+                                                    price: widget.price!);
                                               }
                                             });
                                           },
@@ -134,9 +141,9 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                                               widget.quantity++;
                                               productProvider.getCheckOutData(
                                                   quantity: widget.quantity,
-                                                  image: widget.image,
-                                                  name: widget.name,
-                                                  price: widget.price);
+                                                  image: widget.image!,
+                                                  name: widget.name!,
+                                                  price: widget.price!);
                                             });
                                           },
                                           child: const Icon(Icons.add)),

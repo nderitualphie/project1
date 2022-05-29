@@ -220,7 +220,6 @@ class _RegisterState extends State<Register> {
                           onChanged: (value) {},
                           decoration: InputDecoration(
                             hintText: "Enter your phone Number",
-                            prefixText: "+254",
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 15.0),
                             hintStyle: TextStyle(color: Colors.black),
@@ -343,7 +342,7 @@ class _RegisterState extends State<Register> {
                   )
                 });
 
-        print(emailController.text);
+        
         FirebaseFirestore.instance
             .collection("user")
             .doc(userCredential.user!.uid)
@@ -351,7 +350,6 @@ class _RegisterState extends State<Register> {
           "userId": userCredential.user!.uid,
           "email": emailController.text,
           "phoneNo": phoneNocontroller.text,
-          //"userImage": ,
           "userName": userNamecontroller.text,
           "address": addressController.text,
         });

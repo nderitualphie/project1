@@ -1,9 +1,13 @@
 import 'package:app2/views/commerce/detail_page.dart';
+import 'package:app2/views/commerce/notifications.dart';
+import 'package:app2/views/commerce/search.dart';
 import 'package:app2/views/commerce/singleproducts.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../model/product.dart';
 import 'homepage.dart';
+import 'provider/product_provider.dart';
 
 class ListProduct extends StatelessWidget {
   final String name;
@@ -16,6 +20,8 @@ class ListProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ProductProvider productProvider = Provider.of<ProductProvider>(context);
+    final Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.green,
@@ -32,17 +38,12 @@ class ListProduct extends StatelessWidget {
               )),
           actions: [
             IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.search,
-                  color: Colors.black,
-                )),
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.notifications,
-                  color: Colors.black,
-                ))
+              onPressed: () {
+                showSearch(context: context, delegate: Search());
+              },
+              icon: const Icon(Icons.search, color: Colors.black),
+            ),
+            NotificationButton()
           ],
           title: const Text(
             'Products List',
@@ -80,8 +81,21 @@ class ListProduct extends StatelessWidget {
                         crossAxisCount: 2,
                         scrollDirection: Axis.vertical,
                         children: snapshot
-                            .map((e) => SingleProduct(
-                                image: e.image, price: e.price, name: e.name))
+                            .map((e) => GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .pushReplacement(MaterialPageRoute(
+                                            builder: (ctx) => DetailView(
+                                                  image: e.image,
+                                                  name: e.name,
+                                                  price: e.price,
+                                                )));
+                                  },
+                                  child: SingleProduct(
+                                      image: e.image,
+                                      price: e.price,
+                                      name: e.name),
+                                ))
                             .toList(),
                       ))
                 ]),

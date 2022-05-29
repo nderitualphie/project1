@@ -2,6 +2,7 @@ import 'package:app2/model/usermodel.dart';
 import 'package:app2/views/commerce/notifications.dart';
 import 'package:app2/views/commerce/profile_page.dart';
 import 'package:app2/views/commerce/provider/product_provider.dart';
+import 'package:app2/views/commerce/search.dart';
 import 'package:app2/views/commerce/singleproducts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -226,19 +227,19 @@ class _DefaultPageState extends State<DefaultPage> {
     return Drawer(
       child: ListView(children: [
         _buildUserAccountsDrawer(),
-        UserAccountsDrawerHeader(
-          accountName: Text(
-            'Aliphonza',
-            style: TextStyle(color: Colors.black),
-          ),
-          currentAccountPicture: CircleAvatar(
-            radius: 50,
-            backgroundImage: AssetImage("lib/images/beetroot.jpg"),
-          ),
-          decoration: BoxDecoration(color: Colors.green),
-          accountEmail:
-              Text("alphie@gmail", style: TextStyle(color: Colors.black)),
-        ),
+        // UserAccountsDrawerHeader(
+        //   accountName: Text(
+        //     "Aliphonza",
+        //     style: TextStyle(color: Colors.black),
+        //   ),
+        //   currentAccountPicture: CircleAvatar(
+        //     radius: 50,
+        //     backgroundImage: AssetImage("lib/images/beetroot.jpg"),
+        //   ),
+        //   decoration: BoxDecoration(color: Colors.green),
+        //   accountEmail:
+        //       Text("alphie@gmail", style: TextStyle(color: Colors.black)),
+        // ),
         ListTile(
           selected: profileColor,
           onTap: () {
@@ -364,13 +365,14 @@ class _DefaultPageState extends State<DefaultPage> {
         children: userModel.map((e) {
       return UserAccountsDrawerHeader(
         accountName: Text(
-          "Aliphonza Nderitu",
+          e.userName,
           style: TextStyle(color: Colors.black),
         ),
         currentAccountPicture: CircleAvatar(
-          radius: 50,
-          backgroundImage: AssetImage("lib/images/beetroot.jpg"),
-        ),
+            radius: 50,
+            backgroundImage: e.userImage == null
+                ? AssetImage("lib/images/beetroot.jpg") as ImageProvider
+                : NetworkImage(e.userImage)),
         decoration: BoxDecoration(color: Colors.green),
         accountEmail: Text(e.email, style: TextStyle(color: Colors.black)),
       );
@@ -404,13 +406,7 @@ class _DefaultPageState extends State<DefaultPage> {
               _key.currentState!.openDrawer();
             },
           ),
-          actions: <Widget>[
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.search, color: Colors.black),
-            ),
-            NotificationButton()
-          ],
+          actions: [NotificationButton()],
         ),
         body: Container(
             height: double.infinity,

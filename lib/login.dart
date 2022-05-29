@@ -209,15 +209,6 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 20,
                         ),
-                        Visibility(
-                            maintainSize: true,
-                            maintainAnimation: true,
-                            maintainState: true,
-                            visible: visible,
-                            child: Container(
-                                child: CircularProgressIndicator(
-                              color: Colors.white,
-                            ))),
                       ],
                     ),
                   ),

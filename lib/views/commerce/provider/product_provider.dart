@@ -8,7 +8,7 @@ import '../../../model/cartmodel.dart';
 import '../../../model/product.dart';
 
 class ProductProvider with ChangeNotifier {
-  late UserModel userModel;
+  UserModel? userModel;
   List<UserModel> userModelList = [];
   Future<void> getUserdata() async {
     List<UserModel> newList = [];
@@ -19,6 +19,9 @@ class ProductProvider with ChangeNotifier {
       (element) {
         if (currentUser.uid == element.data().toString().contains("userId")) {
           userModel = UserModel(
+            address: element.data().toString().contains('address')
+                ? element["address"]
+                : '',
             userImage: element.data().toString().contains('userImage')
                 ? element["userImage"]
                 : '',
@@ -32,7 +35,7 @@ class ProductProvider with ChangeNotifier {
                 ? element["phoneNo"]
                 : '',
           );
-          newList.add(userModel);
+          newList.add(userModel!);
         }
         userModelList = newList;
       },
@@ -68,10 +71,10 @@ class ProductProvider with ChangeNotifier {
   late CartModel checkOutModel;
 
   void getCheckOutData({
-    int? quantity,
-    int? price,
-    String? name,
-    String? image,
+    required int quantity,
+    required int price,
+    required String name,
+    required String image,
   }) {
     checkOutModel = CartModel(
       price: price,
@@ -215,5 +218,18 @@ class ProductProvider with ChangeNotifier {
   void deleteCartProduct(int index) {
     cartModelList.removeAt(index);
     notifyListeners();
+  }
+
+  List<Product> searchList = [];
+  void getSearchList({required List<Product> list}) {
+    searchList = list;
+  }
+
+  List<Product> searchProductList(String query) {
+    List<Product> searchlhirt = searchList.where((element) {
+      return element.name.toUpperCase().contains(query) ||
+          element.name.toLowerCase().contains(query);
+    }).toList();
+    return searchlhirt;
   }
 }
