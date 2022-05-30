@@ -7,6 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../model/cartmodel.dart';
+
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({
     Key? key,
@@ -16,12 +18,6 @@ class CheckoutPage extends StatefulWidget {
   State<CheckoutPage> createState() => _CheckoutPageState();
 }
 
-// @override
-// void initState() {
-//   productProvider = Provider.of<ProductProvider>(context, listen: false);
-//   myList = productProvider.checkOutModelList;
-//   super.initState();
-// }
 class _CheckoutPageState extends State<CheckoutPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late ProductProvider productProvider;
@@ -41,49 +37,62 @@ class _CheckoutPageState extends State<CheckoutPage> {
   late int total;
   late int index;
   late User user;
-//   Widget _buildButton() {
-//     return Column(
-//         children: productProvider.userModelList.map((e) {
-//       return Container(
-//         // height: 55,
-//         // width: 70,
-//         child: ElevatedButton(
-//           child: const Text(
-//             'Procced to pay',
-//             style: TextStyle(
-//                 fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
-//           ),
-//           onPressed: () {
-// //             if(productProvider.checkOutModelList.isNotEmpty){
-// // FirebaseFirestore.instance.collection("orders").doc(user.uid).set({
-// //               "product":productProvider.checkOutModelList.map((c){
-// // "productName" :c.name
-// //               "productPrice":
-// //                   c.price;
-// //                   "productQuantity":
-// //                   c.quantity;
-// //               }).toList(),
+  late List<CartModel> myList;
+  Widget _buildButton() {
+    return Column(
+        children: productProvider.userModelList.map((e) {
+      return Container(
+        height: 70,
+        padding: EdgeInsets.all(10),
+        width: double.infinity,
+        child: ElevatedButton(
+          child: Text(
+            "Proceed to buy",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          onPressed: () {
+            if (productProvider.getCheckOutModelList.isNotEmpty) {
+              FirebaseFirestore.instance.collection("Order").add({
+                "Product": productProvider.getCheckOutModelList
+                    .map((c) => {
+                          "ProductName": c.name,
+                          "ProductPrice": c.price,
+                          "ProductQuantity": c.quantity,
+                          "ProductImage": c.image,
+                        })
+                    .toList(),
+                "TotalPrice": total,
+                "UserName": e.userName,
+                "UserEmail": e.email,
+                "UserNumber": e.phoneNo,
+                "UserAddress": e.address,
+                "UserId": user.uid,
+              });
+              setState(() {
+                myList.clear();
+              });
 
-// //               "Total Price": total,
-
-// //               "userName": e.userName,
-// //               "email": e.email,
-// //               "address": e.address,
-// //               "userId": user.uid,
-// //               "phoneNo": e.phoneNo,
-// //             });
-// //             productProvider.clearCheckoutProduct();
-// //           }
-
-// //         }),
-// //       );
-// //     }).toList()
-// );
-//             }
-
-//   }
+              productProvider.addNotification("Notification");
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("No Item Yet"),
+                ),
+              );
+            }
+          },
+        ),
+      );
+    }).toList());
+  }
 
   int count = 1;
+  @override
+  void initState() {
+    productProvider = Provider.of<ProductProvider>(context, listen: false);
+    myList = productProvider.checkOutModelList;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,14 +111,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     return Scaffold(
         key: _scaffoldKey,
         bottomNavigationBar: Container(
-          height: 55,
-          width: 70,
-          padding: EdgeInsets.all(10),
-          child: ElevatedButton(
-            child: Text("proceed to pay"),
-            onPressed: () {},
-          ),
-        ),
+            height: 70, width: double.infinity, child: _buildButton()),
         appBar: AppBar(
           backgroundColor: Colors.green,
           elevation: 0.0,
@@ -135,7 +137,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Container(
-              height: 400,
+              height: 450,
               child: ListView.builder(
                 itemCount: productProvider.getCheckOutModelListLength,
                 //shrinkWrap: true,

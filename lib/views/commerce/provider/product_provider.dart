@@ -17,7 +17,7 @@ class ProductProvider with ChangeNotifier {
         await FirebaseFirestore.instance.collection('user').get();
     userDatasnapshot.docs.forEach(
       (element) {
-        if (currentUser.uid == element.data().toString().contains("userId")) {
+        if (currentUser.uid == element.get("userId")) {
           userModel = UserModel(
             address: element.data().toString().contains('address')
                 ? element["address"]
@@ -226,10 +226,10 @@ class ProductProvider with ChangeNotifier {
   }
 
   List<Product> searchProductList(String query) {
-    List<Product> searchlhirt = searchList.where((element) {
+    List<Product> searchlist = searchList.where((element) {
       return element.name.toUpperCase().contains(query) ||
           element.name.toLowerCase().contains(query);
     }).toList();
-    return searchlhirt;
+    return searchlist;
   }
 }

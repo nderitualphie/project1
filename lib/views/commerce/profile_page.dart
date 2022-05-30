@@ -21,6 +21,7 @@ class _ProfilePageState extends State<ProfilePage> {
   late TextEditingController phoneNumber;
   late TextEditingController address;
   late TextEditingController userName;
+  late TextEditingController email;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   // static String p =
   //     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -97,7 +98,8 @@ class _ProfilePageState extends State<ProfilePage> {
       "UserName": userName.text,
       "UserNumber": phoneNumber.text,
       "UserImage": imageMap,
-      "UserAddress": address.text
+      "UserAddress": address.text,
+      "email": email.text,
     });
     setState(() {
       centerCircle = false;
@@ -112,7 +114,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       child: Container(
-        height: 55,
+        height: 50,
         padding: EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
           borderRadius: edit == false
@@ -146,6 +148,7 @@ class _ProfilePageState extends State<ProfilePage> {
     address = TextEditingController(text: userModel!.address);
     userName = TextEditingController(text: userModel!.userName);
     phoneNumber = TextEditingController(text: userModel!.phoneNo);
+    email = TextEditingController(text: userModel!.email);
 
     return Container(
       height: double.infinity,
@@ -218,9 +221,10 @@ class _ProfilePageState extends State<ProfilePage> {
             decoration: InputDecoration(
                 hintText: "User name", border: OutlineInputBorder()),
           ),
-          _buildSingleContainer(
-            endText: userModel!.email,
-            startText: "Email",
+          TextFormField(
+            controller: email,
+            decoration: InputDecoration(
+                hintText: "Email", border: OutlineInputBorder()),
           ),
           TextFormField(
             controller: address,
@@ -281,9 +285,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   icon: Icon(
                     Icons.check,
                     size: 30,
-                    color: Color(0xff746bc9),
+                    color: Colors.greenAccent,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      edit = true;
+                    });
+                  },
                 ),
         ],
       ),
@@ -302,8 +310,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       }
                       var myDoc = (snapshot.data as QuerySnapshot).docs;
                       myDoc.forEach((checkDocs) {
-                        if (checkDocs.data().toString().contains("userId") ==
-                            userUid) {
+                        if (checkDocs.get("userId") == userUid) {
                           userModel = UserModel(
                             email: checkDocs.data().toString().contains('email')
                                 ? checkDocs["email"]
@@ -330,7 +337,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         }
                       });
                       return Container(
-                        height: 603,
+                        height: 600,
                         width: double.infinity,
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Column(
@@ -339,7 +346,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             Stack(
                               children: [
                                 Container(
-                                  height: 200,
+                                  height: 180,
                                   width: double.infinity,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -382,7 +389,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                   Colors.transparent,
                                               child: Icon(
                                                 Icons.camera_alt,
-                                                color: Color(0xff746bc9),
+                                                color: Colors.greenAccent,
                                               ),
                                             ),
                                           ),
@@ -408,11 +415,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
+                              // shape: RoundedRectangleBorder(
+                              //     borderRadius: BorderRadius.circular(30)),
                               child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20)),
+                                // decoration: BoxDecoration(
+                                //     borderRadius: BorderRadius.circular(20)),
                                 child: edit == false
                                     ? ElevatedButton(
                                         child: Text("Edit Profile"),

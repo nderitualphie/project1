@@ -1,4 +1,6 @@
 import 'package:app2/model/usermodel.dart';
+import 'package:app2/views/commerce/cart_page.dart';
+import 'package:app2/views/commerce/contact_us.dart';
 import 'package:app2/views/commerce/notifications.dart';
 import 'package:app2/views/commerce/profile_page.dart';
 import 'package:app2/views/commerce/provider/product_provider.dart';
@@ -227,19 +229,6 @@ class _DefaultPageState extends State<DefaultPage> {
     return Drawer(
       child: ListView(children: [
         _buildUserAccountsDrawer(),
-        // UserAccountsDrawerHeader(
-        //   accountName: Text(
-        //     "Aliphonza",
-        //     style: TextStyle(color: Colors.black),
-        //   ),
-        //   currentAccountPicture: CircleAvatar(
-        //     radius: 50,
-        //     backgroundImage: AssetImage("lib/images/beetroot.jpg"),
-        //   ),
-        //   decoration: BoxDecoration(color: Colors.green),
-        //   accountEmail:
-        //       Text("alphie@gmail", style: TextStyle(color: Colors.black)),
-        // ),
         ListTile(
           selected: profileColor,
           onTap: () {
@@ -262,29 +251,31 @@ class _DefaultPageState extends State<DefaultPage> {
             style: TextStyle(color: Colors.black),
           ),
         ),
-        ListTile(
-          selected: homeColor,
-          onTap: () {
-            setState(() {
-              homeColor = true;
-              contactUsColor = false;
-              cartColor = false;
-              aboutColor = false;
-              profileColor = false;
-            });
-          },
-          leading: const Icon(
-            Icons.home,
-            color: Colors.black,
-          ),
-          title: const Text(
-            'Home',
-            style: TextStyle(color: Colors.black),
-          ),
-        ),
+        // ListTile(
+        //   selected: homeColor,
+        //   onTap: () {
+        //     setState(() {
+        //       homeColor = true;
+        //       contactUsColor = false;
+        //       cartColor = false;
+        //       aboutColor = false;
+        //       profileColor = false;
+        //     });
+        //   },
+        //   leading: const Icon(
+        //     Icons.home,
+        //     color: Colors.black,
+        //   ),
+        //   title: const Text(
+        //     'Home',
+        //     style: TextStyle(color: Colors.black),
+        //   ),
+        // ),
         ListTile(
           selected: cartColor,
           onTap: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => CartPage()));
             setState(() {
               cartColor = true;
               homeColor = false;
@@ -325,6 +316,8 @@ class _DefaultPageState extends State<DefaultPage> {
         ListTile(
           selected: contactUsColor,
           onTap: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => ContactUs()));
             setState(() {
               contactUsColor = true;
               cartColor = false;
