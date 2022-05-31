@@ -1,5 +1,6 @@
 import 'package:app2/views/commerce/cart_page.dart';
 import 'package:app2/views/commerce/cartsingle_product.dart';
+import 'package:app2/views/commerce/checkoutsingleproduct.dart';
 import 'package:app2/views/commerce/notifications.dart';
 import 'package:app2/views/commerce/provider/product_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -76,7 +77,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text("No Item Yet"),
+                  content: Text("No Item Added"),
                 ),
               );
             }
@@ -139,21 +140,20 @@ class _CheckoutPageState extends State<CheckoutPage> {
             Container(
               height: 450,
               child: ListView.builder(
-                itemCount: productProvider.getCheckOutModelListLength,
+                itemCount: myList.length,
                 //shrinkWrap: true,
                 itemBuilder: (context, myIndex) {
-                  print(productProvider.getCheckOutModelListLength);
+                  print(myList.length);
                   index = myIndex;
-                  return CartSingleProduct(
-                      isCount: true,
+                  return CheckOutSingleProduct(
+                     
                       index: myIndex,
-                      name: productProvider.getCheckOutModelList[myIndex].name,
+                      name: myList[myIndex].name!,
                       image:
-                          productProvider.getCheckOutModelList[myIndex].image,
+                          myList[myIndex].image!,
                       price:
-                          productProvider.getCheckOutModelList[myIndex].price,
-                      quantity: productProvider
-                          .getCheckOutModelList[myIndex].quantity!);
+                          myList[myIndex].price!,
+                      quantity: myList[myIndex].quantity!,);
                 },
               ),
             ),

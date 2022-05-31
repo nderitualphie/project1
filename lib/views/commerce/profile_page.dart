@@ -23,33 +23,21 @@ class _ProfilePageState extends State<ProfilePage> {
   late TextEditingController userName;
   late TextEditingController email;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  // static String p =
-  //     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-  // RegExp regExp =  RegExp(p);
+  static String p =
+      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+  RegExp regExp = RegExp(p);
 
   // void vaildation() async {
   //   if (userName.text.isEmpty && phoneNumber.text.isEmpty) {
-  //     _scaffoldKey.currentState.showSnackBar(
+  //     ScaffoldMessenger.of(context).showSnackBar(
   //       SnackBar(
-  //         content: Text("All Flied Are Empty"),
+  //         content: Text("All Fields Are Empty"),
   //       ),
   //     );
   //   } else if (userName.text.isEmpty) {
-  //     _scaffoldKey.currentState.showSnackBar(
+  //     ScaffoldMessenger.of(context).showSnackBar(
   //       SnackBar(
   //         content: Text("Name Is Empty "),
-  //       ),
-  //     );
-  //   } else if (userName.text.length < 6) {
-  //     _scaffoldKey.currentState.showSnackBar(
-  //       SnackBar(
-  //         content: Text("Name Must Be 6 "),
-  //       ),
-  //     );
-  //   } else if (phoneNumber.text.length < 11 || phoneNumber.text.length > 11) {
-  //     _scaffoldKey.currentState.showSnackBar(
-  //       SnackBar(
-  //         content: Text("Phone Number Must Be 11 "),
   //       ),
   //     );
   //   } else {
@@ -105,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
       centerCircle = false;
     });
     setState(() {
-      edit = false;
+      edit = true;
     });
   }
 
@@ -188,7 +176,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   ListTile(
                     leading: Icon(Icons.camera_alt),
-                    title: Text("Pick Form Camera"),
+                    title: Text("Pick From Camera"),
                     onTap: () {
                       getImage(source: ImageSource.camera);
                       Navigator.of(context).pop();
@@ -196,7 +184,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   ListTile(
                     leading: Icon(Icons.photo_library),
-                    title: Text("Pick Form Gallery"),
+                    title: Text("Pick From Gallery"),
                     onTap: () {
                       getImage(source: ImageSource.gallery);
                       Navigator.of(context).pop();
@@ -209,7 +197,7 @@ class _ProfilePageState extends State<ProfilePage> {
         });
   }
 
-  Widget _buildTextFormFliedPart() {
+  Widget _buildTextFormFieldPart() {
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -288,9 +276,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     color: Colors.greenAccent,
                   ),
                   onPressed: () {
-                    setState(() {
-                      edit = true;
-                    });
+                    userDetailUpdate();
                   },
                 ),
         ],
@@ -304,7 +290,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(),
                         );
                       }
@@ -384,7 +370,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                             onTap: () {
                                               myDialogBox(context);
                                             },
-                                            child: CircleAvatar(
+                                            child: const CircleAvatar(
                                               backgroundColor:
                                                   Colors.transparent,
                                               child: Icon(
@@ -407,7 +393,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   Expanded(
                                     child: Container(
                                       child: edit == true
-                                          ? _buildTextFormFliedPart()
+                                          ? _buildTextFormFieldPart()
                                           : _buildContainerPart(),
                                     ),
                                   ),

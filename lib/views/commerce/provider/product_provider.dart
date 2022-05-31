@@ -70,17 +70,19 @@ class ProductProvider with ChangeNotifier {
   List<CartModel> checkOutModelList = [];
   late CartModel checkOutModel;
 
-  void getCheckOutData({
-    required int quantity,
-    required int price,
-    required String name,
-    required String image,
+   void getCheckOutData({
+   required int quantity,
+   required int price,
+   required String name,
+    
+   required String image,
   }) {
     checkOutModel = CartModel(
+     
       price: price,
       name: name,
       image: image,
-      quantity: quantity,
+     quantity: quantity
     );
     checkOutModelList.add(checkOutModel);
   }
@@ -92,6 +94,7 @@ class ProductProvider with ChangeNotifier {
   int get getCheckOutModelListLength {
     return checkOutModelList.length;
   }
+
 
   List<Product> feature = [];
   late Product featuredata;

@@ -94,16 +94,7 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     Text(
-                        //       'Quantity',
-                        //       style: TextStyle(
-                        //           fontSize: 16, fontWeight: FontWeight.bold),
-                        //     ),
-                        //   ],
-                        // ),
+                        
                         Container(
                           height: 50,
                           width: 120,
