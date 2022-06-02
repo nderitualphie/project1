@@ -1,9 +1,11 @@
 import 'package:app2/views/commerce/homepage.dart';
 import 'package:app2/views/commerce/notifications.dart';
+import 'package:app2/views/commerce/payment.dart';
 import 'package:app2/views/commerce/provider/product_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import '../../model/cartmodel.dart';
 import 'checkoutsingleproduct.dart';
@@ -33,7 +35,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  late int total;
+  int? total;
   late int index;
   late User user;
   late List<CartModel> myList;
@@ -44,47 +46,36 @@ class _CheckoutPageState extends State<CheckoutPage> {
           primary: Colors.green,
           padding: EdgeInsets.all(10),
         ),
-        onPressed: () {
-          productProvider.userModelList.map((e) => {
-                if (productProvider.getCheckOutModelList.isNotEmpty)
-                  {
-                    FirebaseFirestore.instance.collection("Order").add({
-                      "Product": productProvider.getCheckOutModelList
-                          .map((c) => {
-                                "ProductName": c.name,
-                                "ProductPrice": c.price,
-                                "ProductQuantity": c.quantity,
-                                "ProductImage": c.image,
-                              })
-                          .toList(),
-                      "TotalPrice": total,
-                      "UserName": e.userName,
-                      "UserEmail": e.email,
-                      "UserNumber": e.phoneNo,
-                      "UserAddress": e.address,
-                      "UserId": user.uid,
-                    })
-                  }
-                else
-                  {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("No Item Added"),
-                      ),
-                    )
-                  }
-              }.toList());
-        },
         child: const Text(
           'Proceed to pay',
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
-        ));
+        ),
+        onPressed: () {
+          FirebaseFirestore.instance.collection("Order").add({
+            "ProductDetails": productProvider.getCheckOutModelList
+                .map((e) => {
+                      "ProductName": e.name,
+                      "ProductPrice": e.price,
+                      "ProductQuantity": e.quantity,
+                    })
+                .toList(),
+            "UserDetails": productProvider.getUserModelList
+                .map((e) => {
+                      "userAddress": e.address,
+                      "userPhone": e.phoneNo,
+                      "Useremail": e.email,
+                      "TotalAmount": total,
+                      "userId": user.uid
+                    })
+                .toList(),
+          });
+        });
   }
 
   @override
   void initState() {
-    productProvider = Provider.of<ProductProvider>(context, listen: false);
+    productProvider = Provider.of<ProductProvider>(this.context, listen: false);
     myList = productProvider.checkOutModelList;
     super.initState();
   }
@@ -96,7 +87,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     int shipping = 100;
     int total;
     productProvider = Provider.of<ProductProvider>(context);
-    productProvider.userModelList;
+    productProvider.getUserdata();
     productProvider.getCheckOutModelList.forEach(
       (element) {
         subtotal += element.price! * element.quantity!;

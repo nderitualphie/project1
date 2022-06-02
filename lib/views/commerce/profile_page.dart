@@ -17,7 +17,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  UserModel? userModel;
+  late UserModel userModel;
   late TextEditingController phoneNumber;
   late TextEditingController address;
   late TextEditingController userName;
@@ -83,10 +83,10 @@ class _ProfilePageState extends State<ProfilePage> {
         ? imageMap = await _uploadImage(image: _pickedImage!)
         : Container();
     FirebaseFirestore.instance.collection("user").doc(userUid).update({
-      "UserName": userName.text,
-      "UserNumber": phoneNumber.text,
+      "userName": userName.text,
+      "phoneNo": phoneNumber.text,
       "UserImage": imageMap,
-      "UserAddress": address.text,
+      "address": address.text,
       "email": email.text,
     });
     setState(() {
@@ -133,10 +133,10 @@ class _ProfilePageState extends State<ProfilePage> {
   late String userImage;
   bool edit = false;
   Widget _buildContainerPart() {
-    address = TextEditingController(text: userModel!.address);
-    userName = TextEditingController(text: userModel!.userName);
-    phoneNumber = TextEditingController(text: userModel!.phoneNo);
-    email = TextEditingController(text: userModel!.email);
+    address = TextEditingController(text: userModel.address);
+    userName = TextEditingController(text: userModel.userName);
+    phoneNumber = TextEditingController(text: userModel.phoneNo);
+    email = TextEditingController(text: userModel.email);
 
     return Container(
       height: double.infinity,
@@ -145,19 +145,19 @@ class _ProfilePageState extends State<ProfilePage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _buildSingleContainer(
-            endText: userModel!.userName,
+            endText: userModel.userName!,
             startText: "Name",
           ),
           _buildSingleContainer(
-            endText: userModel!.email,
+            endText: userModel.email!,
             startText: "Email",
           ),
           _buildSingleContainer(
-            endText: userModel!.phoneNo,
+            endText: userModel.phoneNo!,
             startText: "Phone Number",
           ),
           _buildSingleContainer(
-            endText: userModel!.address,
+            endText: userModel.address!,
             startText: "Address",
           ),
         ],
@@ -304,8 +304,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             userImage: checkDocs
                                     .data()
                                     .toString()
-                                    .contains('userImage')
-                                ? checkDocs["userImage"]
+                                    .contains('UserImage')
+                                ? checkDocs["UserImage"]
                                 : '',
                             address:
                                 checkDocs.data().toString().contains('address')
@@ -340,12 +340,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                       CircleAvatar(
                                           maxRadius: 65,
                                           backgroundImage: _pickedImage == null
-                                              ? userModel!.userImage == null
+                                              ? userModel.userImage == null
                                                   ? AssetImage(
                                                           "lib/images/beetroot.png")
                                                       as ImageProvider
                                                   : NetworkImage(
-                                                      userModel!.userImage)
+                                                      userModel.userImage!)
                                               : FileImage(_pickedImage!)),
                                     ],
                                   ),

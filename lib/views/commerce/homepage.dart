@@ -251,7 +251,6 @@ class _DefaultPageState extends State<DefaultPage> {
             style: TextStyle(color: Colors.black),
           ),
         ),
-       
         ListTile(
           selected: cartColor,
           onTap: () {
@@ -339,16 +338,16 @@ class _DefaultPageState extends State<DefaultPage> {
         children: userModel.map((e) {
       return UserAccountsDrawerHeader(
         accountName: Text(
-          e.userName,
+          e.userName!,
           style: TextStyle(color: Colors.black),
         ),
         currentAccountPicture: CircleAvatar(
             radius: 50,
             backgroundImage: e.userImage == null
                 ? AssetImage("lib/images/beetroot.jpg") as ImageProvider
-                : NetworkImage(e.userImage)),
+                : NetworkImage(e.userImage!)),
         decoration: BoxDecoration(color: Colors.green),
-        accountEmail: Text(e.email, style: TextStyle(color: Colors.black)),
+        accountEmail: Text(e.email!, style: TextStyle(color: Colors.black)),
       );
     }).toList());
   }

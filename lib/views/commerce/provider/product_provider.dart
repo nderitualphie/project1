@@ -22,8 +22,8 @@ class ProductProvider with ChangeNotifier {
             address: element.data().toString().contains('address')
                 ? element["address"]
                 : '',
-            userImage: element.data().toString().contains('userImage')
-                ? element["userImage"]
+            userImage: element.data().toString().contains('UserImage')
+                ? element["UserImage"]
                 : '',
             userName: element.data().toString().contains('userName')
                 ? element["userName"]
@@ -33,7 +33,7 @@ class ProductProvider with ChangeNotifier {
                 : '',
             phoneNo: element.data().toString().contains('phoneNo')
                 ? element["phoneNo"]
-                : 0,
+                : "",
           );
           newList.add(userModel!);
         }
@@ -70,20 +70,14 @@ class ProductProvider with ChangeNotifier {
   List<CartModel> checkOutModelList = [];
   late CartModel checkOutModel;
 
-   void getCheckOutData({
-   required int quantity,
-   required int price,
-   required String name,
-    
-   required String image,
+  void getCheckOutData({
+    required int quantity,
+    required int price,
+    required String name,
+    required String image,
   }) {
-    checkOutModel = CartModel(
-     
-      price: price,
-      name: name,
-      image: image,
-     quantity: quantity
-    );
+    checkOutModel =
+        CartModel(price: price, name: name, image: image, quantity: quantity);
     checkOutModelList.add(checkOutModel);
   }
 
@@ -94,7 +88,6 @@ class ProductProvider with ChangeNotifier {
   int get getCheckOutModelListLength {
     return checkOutModelList.length;
   }
-
 
   List<Product> feature = [];
   late Product featuredata;
