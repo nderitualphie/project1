@@ -303,13 +303,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-  mpesa:
+  mpesa_flutter_plugin:
     dependency: "direct main"
     description:
-      name: mpesa
+      name: mpesa_flutter_plugin
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "1.6.0"
   nested:
     dependency: transitive
     description:

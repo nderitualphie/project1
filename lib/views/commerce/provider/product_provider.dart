@@ -33,7 +33,7 @@ class ProductProvider with ChangeNotifier {
                 : '',
             phoneNo: element.data().toString().contains('phoneNo')
                 ? element["phoneNo"]
-                : '',
+                : 0,
           );
           newList.add(userModel!);
         }

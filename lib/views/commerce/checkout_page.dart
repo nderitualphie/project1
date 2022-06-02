@@ -1,14 +1,12 @@
-import 'package:app2/views/commerce/cart_page.dart';
-import 'package:app2/views/commerce/cartsingle_product.dart';
-import 'package:app2/views/commerce/checkoutsingleproduct.dart';
+import 'package:app2/views/commerce/homepage.dart';
 import 'package:app2/views/commerce/notifications.dart';
 import 'package:app2/views/commerce/provider/product_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../model/cartmodel.dart';
+import 'checkoutsingleproduct.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({
@@ -39,55 +37,51 @@ class _CheckoutPageState extends State<CheckoutPage> {
   late int index;
   late User user;
   late List<CartModel> myList;
+  int count = 1;
   Widget _buildButton() {
-    return Column(
-        children: productProvider.userModelList.map((e) {
-      return Container(
-        height: 70,
-        padding: EdgeInsets.all(10),
-        width: double.infinity,
-        child: ElevatedButton(
-          child: Text(
-            "Proceed to buy",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-          onPressed: () {
-            if (productProvider.getCheckOutModelList.isNotEmpty) {
-              FirebaseFirestore.instance.collection("Order").add({
-                "Product": productProvider.getCheckOutModelList
-                    .map((c) => {
-                          "ProductName": c.name,
-                          "ProductPrice": c.price,
-                          "ProductQuantity": c.quantity,
-                          "ProductImage": c.image,
-                        })
-                    .toList(),
-                "TotalPrice": total,
-                "UserName": e.userName,
-                "UserEmail": e.email,
-                "UserNumber": e.phoneNo,
-                "UserAddress": e.address,
-                "UserId": user.uid,
-              });
-              setState(() {
-                myList.clear();
-              });
-
-              productProvider.addNotification("Notification");
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("No Item Added"),
-                ),
-              );
-            }
-          },
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.green,
+          padding: EdgeInsets.all(10),
         ),
-      );
-    }).toList());
+        onPressed: () {
+          productProvider.userModelList.map((e) => {
+                if (productProvider.getCheckOutModelList.isNotEmpty)
+                  {
+                    FirebaseFirestore.instance.collection("Order").add({
+                      "Product": productProvider.getCheckOutModelList
+                          .map((c) => {
+                                "ProductName": c.name,
+                                "ProductPrice": c.price,
+                                "ProductQuantity": c.quantity,
+                                "ProductImage": c.image,
+                              })
+                          .toList(),
+                      "TotalPrice": total,
+                      "UserName": e.userName,
+                      "UserEmail": e.email,
+                      "UserNumber": e.phoneNo,
+                      "UserAddress": e.address,
+                      "UserId": user.uid,
+                    })
+                  }
+                else
+                  {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("No Item Added"),
+                      ),
+                    )
+                  }
+              }.toList());
+        },
+        child: const Text(
+          'Proceed to pay',
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
+        ));
   }
 
-  int count = 1;
   @override
   void initState() {
     productProvider = Provider.of<ProductProvider>(context, listen: false);
@@ -100,26 +94,29 @@ class _CheckoutPageState extends State<CheckoutPage> {
     user = FirebaseAuth.instance.currentUser!;
     int subtotal = 0;
     int shipping = 100;
-
+    int total;
     productProvider = Provider.of<ProductProvider>(context);
+    productProvider.userModelList;
     productProvider.getCheckOutModelList.forEach(
       (element) {
         subtotal += element.price! * element.quantity!;
       },
     );
     total = subtotal + shipping;
-
     return Scaffold(
         key: _scaffoldKey,
         bottomNavigationBar: Container(
-            height: 70, width: double.infinity, child: _buildButton()),
+            height: 55,
+            width: 150,
+            margin: const EdgeInsets.all(10),
+            child: _buildButton()),
         appBar: AppBar(
           backgroundColor: Colors.green,
           elevation: 0.0,
           leading: IconButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => CartPage()));
+                    MaterialPageRoute(builder: (context) => DefaultPage()));
               },
               icon: const Icon(
                 Icons.arrow_back,
@@ -141,19 +138,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
               height: 450,
               child: ListView.builder(
                 itemCount: myList.length,
-                //shrinkWrap: true,
                 itemBuilder: (context, myIndex) {
                   print(myList.length);
                   index = myIndex;
                   return CheckOutSingleProduct(
-                     
-                      index: myIndex,
-                      name: myList[myIndex].name!,
-                      image:
-                          myList[myIndex].image!,
-                      price:
-                          myList[myIndex].price!,
-                      quantity: myList[myIndex].quantity!,);
+                    index: myIndex,
+                    name: myList[myIndex].name!,
+                    image: myList[myIndex].image!,
+                    price: myList[myIndex].price!,
+                    quantity: myList[myIndex].quantity!,
+                  );
                 },
               ),
             ),

@@ -137,6 +137,11 @@ class _LoginPageState extends State<LoginPage> {
                           height: 20,
                         ),
                         ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.green,
+                              padding: EdgeInsets.all(10),
+                              textStyle: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(

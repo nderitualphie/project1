@@ -132,6 +132,11 @@ class _ContactUsState extends State<ContactUs> {
               ),
             ),
             ElevatedButton(
+               style: ElevatedButton.styleFrom(
+                              primary: Colors.green,
+                              padding: EdgeInsets.all(10),
+                              textStyle: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
               child: Text("Submit"),
               onPressed: () {
                 vaildation();

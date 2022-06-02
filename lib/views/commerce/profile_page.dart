@@ -82,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
     _pickedImage != null
         ? imageMap = await _uploadImage(image: _pickedImage!)
         : Container();
-    FirebaseFirestore.instance.collection("User").doc(userUid).update({
+    FirebaseFirestore.instance.collection("user").doc(userUid).update({
       "UserName": userName.text,
       "UserNumber": phoneNumber.text,
       "UserImage": imageMap,

@@ -251,26 +251,7 @@ class _DefaultPageState extends State<DefaultPage> {
             style: TextStyle(color: Colors.black),
           ),
         ),
-        // ListTile(
-        //   selected: homeColor,
-        //   onTap: () {
-        //     setState(() {
-        //       homeColor = true;
-        //       contactUsColor = false;
-        //       cartColor = false;
-        //       aboutColor = false;
-        //       profileColor = false;
-        //     });
-        //   },
-        //   leading: const Icon(
-        //     Icons.home,
-        //     color: Colors.black,
-        //   ),
-        //   title: const Text(
-        //     'Home',
-        //     style: TextStyle(color: Colors.black),
-        //   ),
-        // ),
+       
         ListTile(
           selected: cartColor,
           onTap: () {

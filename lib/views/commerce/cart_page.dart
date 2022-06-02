@@ -29,6 +29,11 @@ class _CartPageState extends State<CartPage> {
           width: 80,
           margin: const EdgeInsets.all(10),
           child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                primary: Colors.green,
+                padding: EdgeInsets.all(10),
+                textStyle:
+                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             onPressed: () {
               productProvider.addNotification("Notification");
               Navigator.of(context).pushReplacement(

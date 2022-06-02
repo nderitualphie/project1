@@ -21,7 +21,7 @@ class CheckOutSingleProduct extends StatefulWidget {
   _CheckOutSingleProductState createState() => _CheckOutSingleProductState();
 }
 
-TextStyle myStyle = TextStyle(fontSize: 13);
+TextStyle myStyle = TextStyle(fontSize: 16);
 late ProductProvider productProvider;
 
 class _CheckOutSingleProductState extends State<CheckOutSingleProduct> {
@@ -42,14 +42,9 @@ class _CheckOutSingleProductState extends State<CheckOutSingleProduct> {
     return Container(
       height: 30,
       width: 202,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            widget.name,
-            style: myStyle,
-          ),
-        ],
+      child: Text(
+        widget.name,
+        style: myStyle,
       ),
     );
   }

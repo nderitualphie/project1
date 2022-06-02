@@ -34,6 +34,11 @@ class _DetailViewState extends State<DetailView> {
               height: 60,
               width: 320,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                    padding: EdgeInsets.all(10),
+                    textStyle:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 onPressed: () {
                   productProvider.getCartData(
                       image: widget.image,
@@ -45,7 +50,7 @@ class _DetailViewState extends State<DetailView> {
                   ));
                 },
                 child: const Text(
-                  'Proceed to Check out',
+                  'Proceed to Cart',
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

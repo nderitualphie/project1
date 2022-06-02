@@ -209,6 +209,7 @@ class _RegisterState extends State<Register> {
                         ),
                         TextFormField(
                           controller: phoneNocontroller,
+                          keyboardType: TextInputType.phone,
                           // validator: (value) {
                           //   if (value == "") {
                           //     return "Please enter your phone number ";
@@ -342,14 +343,13 @@ class _RegisterState extends State<Register> {
                   )
                 });
 
-        
         FirebaseFirestore.instance
             .collection("user")
             .doc(userCredential.user!.uid)
             .set({
           "userId": userCredential.user!.uid,
           "email": emailController.text,
-          "phoneNo": phoneNocontroller.text,
+          "phoneNo": int.parse(phoneNocontroller.text),
           "userName": userNamecontroller.text,
           "address": addressController.text,
         });
