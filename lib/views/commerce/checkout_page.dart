@@ -4,7 +4,10 @@ import 'package:app2/views/commerce/payment.dart';
 import 'package:app2/views/commerce/provider/product_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:mpesa/mpesa.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import '../../model/cartmodel.dart';
@@ -20,6 +23,39 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
+  bool phoneNumber = false;
+  Mpesa mpesa = Mpesa(
+    clientKey: "2TC5Ah3BZdh7wP6o5SHjbuKID3EXC9ZA",
+    clientSecret: "DTaCzkpNimoDCAmq",
+    passKey: "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919",
+    environment: "sandbox",
+  );
+  myMethod() {
+    productProvider.getUserModelList.map((e) => {
+          mpesa
+              .lipaNaMpesa(
+            transactionDescription: "Payment of Goods",
+            transactionType: "CustomerPayBillOnline",
+            phoneNumber: e.phoneNo!,
+            accountReference: "Agrocommerce LTD",
+            amount: total!,
+            businessShortCode: "174379",
+            callbackUrl: "https://30e1-154-123-143-33.in.ngrok.io/payment",
+          )
+              .then((result) {
+            FirebaseFirestore.instance.collection("CheckoutResults").add({
+              "MerchantRequestID": result.MerchantRequestID,
+              "CheckoutRequestID": result.CheckoutRequestID,
+              "ResponseCode": result.ResponseCode,
+              "ResponseDescription": result.ResponseDescription,
+              "CustomerMessage": result.CustomerMessage,
+            });
+          }).catchError((error) {
+            print(error.toString());
+          })
+        });
+  }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late ProductProvider productProvider;
   Widget _buildBottomDetails(
@@ -35,7 +71,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  int? total;
+  double? total;
   late int index;
   late User user;
   late List<CartModel> myList;
@@ -44,10 +80,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: Colors.green,
-          padding: EdgeInsets.all(10),
         ),
         child: const Text(
-          'Proceed to pay',
+          'Lipa na Mpesa',
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
         ),
@@ -65,11 +100,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       "userAddress": e.address,
                       "userPhone": e.phoneNo,
                       "Useremail": e.email,
-                      "TotalAmount": total,
+                      "TotalAmount": total ?? "",
                       "userId": user.uid
                     })
                 .toList(),
           });
+
+          myMethod();
         });
   }
 
@@ -77,15 +114,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
   void initState() {
     productProvider = Provider.of<ProductProvider>(this.context, listen: false);
     myList = productProvider.checkOutModelList;
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     user = FirebaseAuth.instance.currentUser!;
-    int subtotal = 0;
-    int shipping = 100;
-    int total;
+    double subtotal = 0;
+    double shipping = 100;
     productProvider = Provider.of<ProductProvider>(context);
     productProvider.getUserdata();
     productProvider.getCheckOutModelList.forEach(
@@ -95,11 +132,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
     total = subtotal + shipping;
     return Scaffold(
+        resizeToAvoidBottomInset: true,
         key: _scaffoldKey,
         bottomNavigationBar: Container(
             height: 55,
             width: 150,
-            margin: const EdgeInsets.all(10),
+            margin: EdgeInsets.all(10),
             child: _buildButton()),
         appBar: AppBar(
           backgroundColor: Colors.green,
@@ -143,7 +181,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               ),
             ),
             Container(
-              height: 100,
+              height: 80,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
