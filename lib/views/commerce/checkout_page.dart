@@ -1,6 +1,6 @@
 import 'package:app2/views/commerce/homepage.dart';
 import 'package:app2/views/commerce/notifications.dart';
-import 'package:app2/views/commerce/payment.dart';
+
 import 'package:app2/views/commerce/provider/product_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,29 +31,31 @@ class _CheckoutPageState extends State<CheckoutPage> {
     environment: "sandbox",
   );
   myMethod() {
-    productProvider.getUserModelList.map((e) => {
-          mpesa
-              .lipaNaMpesa(
-            transactionDescription: "Payment of Goods",
-            transactionType: "CustomerPayBillOnline",
-            phoneNumber: e.phoneNo!,
-            accountReference: "Agrocommerce LTD",
-            amount: total!,
-            businessShortCode: "174379",
-            callbackUrl: "https://30e1-154-123-143-33.in.ngrok.io/payment",
-          )
-              .then((result) {
-            FirebaseFirestore.instance.collection("CheckoutResults").add({
-              "MerchantRequestID": result.MerchantRequestID,
-              "CheckoutRequestID": result.CheckoutRequestID,
-              "ResponseCode": result.ResponseCode,
-              "ResponseDescription": result.ResponseDescription,
-              "CustomerMessage": result.CustomerMessage,
-            });
-          }).catchError((error) {
-            print(error.toString());
-          })
-        });
+    FirebaseFirestore.instance.collection("Payment").add({
+      "amount Paid": total,
+      "phone Number": phoneNumber,
+    });
+    mpesa
+        .lipaNaMpesa(
+      transactionDescription: "Payment of Goods",
+      transactionType: "CustomerPayBillOnline",
+      phoneNumber: "254791784445",
+      accountReference: "Agrocommerce LTD",
+      amount: total!,
+      businessShortCode: "174379",
+      callbackUrl: "https://6319-154-122-136-25.in.ngrok.io/payment",
+    )
+        .then((result) {
+      FirebaseFirestore.instance.collection("CheckoutResults").add({
+        "MerchantRequestID": result.MerchantRequestID,
+        "CheckoutRequestID": result.CheckoutRequestID,
+        "ResponseCode": result.ResponseCode,
+        "ResponseDescription": result.ResponseDescription,
+        "CustomerMessage": result.CustomerMessage,
+      });
+    }).catchError((error) {
+      print(error.toString());
+    });
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -105,7 +107,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     })
                 .toList(),
           });
-
+          setState(() {
+            myList.clear();
+          });
           myMethod();
         });
   }
@@ -122,7 +126,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget build(BuildContext context) {
     user = FirebaseAuth.instance.currentUser!;
     double subtotal = 0;
-    double shipping = 100;
+    double shipping = 10;
     productProvider = Provider.of<ProductProvider>(context);
     productProvider.getUserdata();
     productProvider.getCheckOutModelList.forEach(

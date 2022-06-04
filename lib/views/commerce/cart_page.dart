@@ -2,6 +2,7 @@ import 'package:app2/views/commerce/checkout_page.dart';
 import 'package:app2/views/commerce/notifications.dart';
 import 'package:provider/provider.dart';
 
+import '../../model/cartmodel.dart';
 import 'cartsingle_product.dart';
 import 'homepage.dart';
 import 'provider/product_provider.dart';
@@ -18,8 +19,18 @@ class CartPage extends StatefulWidget {
 }
 
 late ProductProvider productProvider;
+late List<CartModel> myList;
+late int index;
 
 class _CartPageState extends State<CartPage> {
+  @override
+  void initState() {
+    productProvider = Provider.of<ProductProvider>(context, listen: false);
+    myList = productProvider.getCartModelList;
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     productProvider = Provider.of<ProductProvider>(context);
@@ -38,9 +49,12 @@ class _CartPageState extends State<CartPage> {
               productProvider.addNotification("Notification");
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => CheckoutPage()));
+              setState(() {
+                myList.clear();
+              });
             },
             child: const Text(
-              'Continue',
+              'Proceed to Checkout',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -68,15 +82,18 @@ class _CartPageState extends State<CartPage> {
           ),
         ),
         body: ListView.builder(
-          itemCount: productProvider.getCartModelListlength,
-          itemBuilder: (context, index) => CartSingleProduct(
-            isCount: false,
-            index: index,
-            image: productProvider.getCartModelList[index].image,
-            price: productProvider.getCartModelList[index].price,
-            name: productProvider.getCartModelList[index].name,
-            quantity: productProvider.getCartModelList[index].quantity!,
-          ),
+          itemCount: myList.length,
+          itemBuilder: (context, myIndex) {
+            index = myIndex;
+            return CartSingleProduct(
+              isCount: false,
+              index: myIndex,
+              image: myList[myIndex].image,
+              price: myList[myIndex].price,
+              name: myList[myIndex].name,
+              quantity: myList[myIndex].quantity!,
+            );
+          },
         ));
   }
 }

@@ -216,6 +216,11 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void clearCartProduct(int index) {
+    getCartModelList.clear();
+    notifyListeners();
+  }
+
   List<Product> searchList = [];
   void getSearchList({required List<Product> list}) {
     searchList = list;
