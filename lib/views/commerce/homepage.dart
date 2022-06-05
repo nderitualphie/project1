@@ -1,4 +1,5 @@
 import 'package:app2/model/usermodel.dart';
+import 'package:app2/views/commerce/aboutus.dart';
 import 'package:app2/views/commerce/cart_page.dart';
 import 'package:app2/views/commerce/contact_us.dart';
 import 'package:app2/views/commerce/notifications.dart';
@@ -210,6 +211,7 @@ class _DefaultPageState extends State<DefaultPage> {
       padding: EdgeInsets.all(10),
       height: 250,
       child: LightCarousel(
+        autoPlayDuration: Duration(seconds: 5),
         autoPlay: true,
         showIndicator: false,
         images: const [
@@ -276,6 +278,8 @@ class _DefaultPageState extends State<DefaultPage> {
         ListTile(
           selected: aboutColor,
           onTap: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => About()));
             setState(() {
               aboutColor = true;
               homeColor = false;

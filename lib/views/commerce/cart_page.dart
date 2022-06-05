@@ -25,9 +25,8 @@ late int index;
 class _CartPageState extends State<CartPage> {
   @override
   void initState() {
-    productProvider = Provider.of<ProductProvider>(context, listen: false);
-    myList = productProvider.getCartModelList;
-
+    productProvider = Provider.of<ProductProvider>(this.context, listen: false);
+    myList = productProvider.cartModelList;
     super.initState();
   }
 

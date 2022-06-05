@@ -65,7 +65,7 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                           height: 20,
                           width: widget.isCount == false ? 180 : 180,
                           child: Row(
-                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 widget.name!,
@@ -73,15 +73,11 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                               ),
                               IconButton(
                                   onPressed: () {
-                                    widget.isCount == false
-                                        ? productProvider
-                                            .deleteCartProduct(widget.index)
-                                        : productProvider.deleteCheckoutProduct(
-                                            widget.index);
+                                    productProvider
+                                        .deleteCartProduct(widget.index);
                                   },
                                   icon: Icon(
                                     Icons.delete,
-                                    size: 20,
                                   ))
                             ],
                           ),
@@ -94,7 +90,6 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        
                         Container(
                           height: 50,
                           width: 120,

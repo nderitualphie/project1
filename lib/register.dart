@@ -220,7 +220,8 @@ class _RegisterState extends State<Register> {
                           // },
                           onChanged: (value) {},
                           decoration: InputDecoration(
-                            hintText: "Enter your phone Number",
+                            hintText:
+                                "Enter phone Number in the format 254700000000",
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 15.0),
                             hintStyle: TextStyle(color: Colors.black),

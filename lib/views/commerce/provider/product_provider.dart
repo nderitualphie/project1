@@ -217,7 +217,7 @@ class ProductProvider with ChangeNotifier {
   }
 
   void clearCartProduct(int index) {
-    getCartModelList.clear();
+    cartModelList.clear();
     notifyListeners();
   }
 

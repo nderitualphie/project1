@@ -4,11 +4,10 @@ import 'package:app2/views/commerce/notifications.dart';
 import 'package:app2/views/commerce/provider/product_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:mpesa/mpesa.dart';
-import 'package:path/path.dart';
+
 import 'package:provider/provider.dart';
 import '../../model/cartmodel.dart';
 import 'checkoutsingleproduct.dart';
@@ -23,7 +22,6 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
-  bool phoneNumber = false;
   Mpesa mpesa = Mpesa(
     clientKey: "2TC5Ah3BZdh7wP6o5SHjbuKID3EXC9ZA",
     clientSecret: "DTaCzkpNimoDCAmq",
@@ -31,10 +29,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
     environment: "sandbox",
   );
   myMethod() {
-    FirebaseFirestore.instance.collection("Payment").add({
-      "amount Paid": total,
-      "phone Number": phoneNumber,
-    });
     mpesa
         .lipaNaMpesa(
       transactionDescription: "Payment of Goods",
