@@ -58,7 +58,7 @@ flutter_lints: ^2.0.0
 
 flutter_icons:
   android: true
-  image_path: "asset/farmer.png"
+  image_path: "asset/icon.jpeg"
   adaptive_icon_background: "#00D100"
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
