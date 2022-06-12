@@ -5,9 +5,9 @@ import 'package:app2/views/commerce/contact_us.dart';
 import 'package:app2/views/commerce/notifications.dart';
 import 'package:app2/views/commerce/profile_page.dart';
 import 'package:app2/views/commerce/provider/product_provider.dart';
-import 'package:app2/views/commerce/search.dart';
+
 import 'package:app2/views/commerce/singleproducts.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:light_carousel/main/light_carousel.dart';
@@ -79,11 +79,13 @@ class _DefaultPageState extends State<DefaultPage> {
                               image: e.image,
                               price: e.price,
                               name: e.name,
+                              location: e.Location,
                             ),
                           ),
                         );
                       },
                       child: SingleProduct(
+                        location: e.Location,
                         image: e.image,
                         price: e.price,
                         name: e.name,
@@ -95,11 +97,15 @@ class _DefaultPageState extends State<DefaultPage> {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (ctx) => DetailView(
-                              image: e.image, price: e.price, name: e.name),
+                              location: e.Location,
+                              image: e.image,
+                              price: e.price,
+                              name: e.name),
                         ),
                       );
                     },
                     child: SingleProduct(
+                      location: e.Location,
                       image: e.image,
                       price: e.price,
                       name: e.name,
@@ -162,11 +168,13 @@ class _DefaultPageState extends State<DefaultPage> {
                             image: e.image,
                             price: e.price,
                             name: e.name,
+                            location: e.Location,
                           ),
                         ),
                       );
                     },
                     child: SingleProduct(
+                      location: e.Location,
                       image: e.image,
                       price: e.price,
                       name: e.name,
@@ -178,11 +186,15 @@ class _DefaultPageState extends State<DefaultPage> {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (ctx) => DetailView(
-                            image: e.image, price: e.price, name: e.name),
+                            location: e.Location,
+                            image: e.image,
+                            price: e.price,
+                            name: e.name),
                       ),
                     );
                   },
                   child: SingleProduct(
+                    location: e.Location,
                     image: e.image,
                     price: e.price,
                     name: e.name,
@@ -388,12 +400,11 @@ class _DefaultPageState extends State<DefaultPage> {
         body: Container(
             height: double.infinity,
             width: double.infinity,
-            margin: const EdgeInsets.symmetric(horizontal: 10),
+            margin: EdgeInsets.all(5),
             child: ListView(children: [
               Container(
                 child: Column(children: <Widget>[
                   Container(
-                    //color: Colors.blue,
                     width: double.infinity,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

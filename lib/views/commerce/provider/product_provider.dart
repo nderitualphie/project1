@@ -100,6 +100,9 @@ class ProductProvider with ChangeNotifier {
         .get();
     featuresnapshot.docs.forEach((element) {
       featuredata = Product(
+        Location: element.data().toString().contains('Location')
+            ? element["Location"]
+            : '',
         image:
             element.data().toString().contains('image') ? element["image"] : '',
         name: element.data().toString().contains('name') ? element['name'] : '',
@@ -125,6 +128,9 @@ class ProductProvider with ChangeNotifier {
         await FirebaseFirestore.instance.collection('homefeature').get();
     homeFeaturesnapshot.docs.forEach((element) {
       homeFeaturedata = Product(
+        Location: element.data().toString().contains('Location')
+            ? element["Location"]
+            : '',
         image:
             element.data().toString().contains('image') ? element["image"] : '',
         name: element.data().toString().contains('name') ? element['name'] : '',
@@ -152,6 +158,9 @@ class ProductProvider with ChangeNotifier {
 
     newarrivalssnapshot.docs.forEach((element) {
       newarrivaldata = Product(
+        Location: element.data().toString().contains('Location')
+            ? element['Location']
+            : '',
         image:
             element.data().toString().contains('image') ? element["image"] : '',
         name: element.data().toString().contains('name') ? element['name'] : '',
@@ -177,6 +186,9 @@ class ProductProvider with ChangeNotifier {
 
     homeArrivalssnapshot.docs.forEach((element) {
       homeArrivaldata = Product(
+        Location: element.data().toString().contains('Location')
+            ? element['Location']
+            : '',
         image:
             element.data().toString().contains('image') ? element['image'] : '',
         name: element.data().toString().contains('name') ? element['name'] : '',

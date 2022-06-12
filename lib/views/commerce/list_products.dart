@@ -1,13 +1,11 @@
 import 'package:app2/views/commerce/detail_page.dart';
 import 'package:app2/views/commerce/notifications.dart';
+import 'package:app2/views/commerce/productlistsingleproduct.dart';
 import 'package:app2/views/commerce/search.dart';
-import 'package:app2/views/commerce/singleproducts.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
+import 'package:flutter/material.dart';
 import '../../model/product.dart';
 import 'homepage.dart';
-import 'provider/product_provider.dart';
 
 class ListProduct extends StatelessWidget {
   final String name;
@@ -20,8 +18,6 @@ class ListProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProductProvider productProvider = Provider.of<ProductProvider>(context);
-    final Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.green,
@@ -66,17 +62,14 @@ class ListProduct extends StatelessWidget {
                               Text(
                                 name,
                                 style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
+                                    fontSize: 17, fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
                         ],
                       )),
-                  const SizedBox(
-                    height: 10,
-                  ),
                   Container(
-                      height: 700,
+                      height: 800,
                       child: GridView.count(
                         crossAxisCount: 2,
                         scrollDirection: Axis.vertical,
@@ -86,12 +79,14 @@ class ListProduct extends StatelessWidget {
                                     Navigator.of(context)
                                         .pushReplacement(MaterialPageRoute(
                                             builder: (ctx) => DetailView(
+                                                  location: e.Location,
                                                   image: e.image,
                                                   name: e.name,
                                                   price: e.price,
                                                 )));
                                   },
-                                  child: SingleProduct(
+                                  child: ProductListSingleProduct(
+                                      location: e.Location,
                                       image: e.image,
                                       price: e.price,
                                       name: e.name),

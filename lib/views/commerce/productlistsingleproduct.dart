@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SingleProduct extends StatelessWidget {
-  const SingleProduct(
+class ProductListSingleProduct extends StatelessWidget {
+  const ProductListSingleProduct(
       {Key? key,
       required this.image,
       required this.price,
@@ -16,11 +16,11 @@ class SingleProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        height: 200,
+        height: 250,
         width: 162,
         child: Column(children: <Widget>[
           Container(
-            height: 110,
+            height: 76,
             width: 160,
             decoration: BoxDecoration(
                 image: DecorationImage(

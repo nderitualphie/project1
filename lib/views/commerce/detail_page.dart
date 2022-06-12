@@ -4,16 +4,21 @@ import 'package:app2/views/commerce/notifications.dart';
 import 'homepage.dart';
 import 'provider/product_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 class DetailView extends StatefulWidget {
   const DetailView(
-      {Key? key, required this.image, required this.name, required this.price})
+      {Key? key,
+      required this.image,
+      required this.name,
+      required this.price,
+      required this.location})
       : super(key: key);
   final String image;
   final String name;
   final int price;
+  final String location;
 
   @override
   State<DetailView> createState() => _DetailViewState();
@@ -165,13 +170,24 @@ class _DetailViewState extends State<DetailView> {
     return Column(
       children: [
         Container(
-          height: 100,
+          height: 120,
           child: Row(
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                    children: [
+                      Text(
+                        "Location: ${widget.location}",
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      IconButton(onPressed: () {}, icon: Icon(Icons.pin_drop))
+                    ],
+                  ),
                   Text(
                     widget.name,
                     style: const TextStyle(
@@ -185,7 +201,7 @@ class _DetailViewState extends State<DetailView> {
                   const Text('Description',
                       style: TextStyle(
                         fontSize: 16,
-                      ))
+                      )),
                 ],
               ),
             ],
@@ -234,6 +250,9 @@ class _DetailViewState extends State<DetailView> {
                       child: Column(
                         children: [
                           _buildDescriptionPart(),
+                          SizedBox(
+                            height: 10,
+                          ),
                           _builddescriptionText(),
 
                           _buildQuantity(),

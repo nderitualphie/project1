@@ -1,5 +1,4 @@
 import 'package:app2/views/commerce/detail_page.dart';
-import 'package:app2/views/commerce/homepage.dart';
 import 'package:app2/views/commerce/provider/product_provider.dart';
 import 'package:app2/views/commerce/singleproducts.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +44,7 @@ class Search extends SearchDelegate<void> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (ctx) => DetailView(
+                          location: e.Location,
                           image: e.image,
                           name: e.name,
                           price: e.price,
@@ -53,6 +53,7 @@ class Search extends SearchDelegate<void> {
                     );
                   },
                   child: SingleProduct(
+                    location: e.Location,
                     image: e.image,
                     name: e.name,
                     price: e.price,
@@ -77,6 +78,7 @@ class Search extends SearchDelegate<void> {
                       MaterialPageRoute(
                         builder: (ctx) => DetailView(
                           image: e.image,
+                          location: e.Location,
                           name: e.name,
                           price: e.price,
                         ),
@@ -84,6 +86,7 @@ class Search extends SearchDelegate<void> {
                     );
                   },
                   child: SingleProduct(
+                   location: e.Location,
                     image: e.image,
                     name: e.name,
                     price: e.price,

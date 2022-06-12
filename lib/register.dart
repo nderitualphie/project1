@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 
 import 'login.dart';
 
@@ -18,8 +18,6 @@ class _RegisterState extends State<Register> {
   bool showProgress = false;
   bool visible = false;
   final _formkey = GlobalKey<FormState>();
-  final _auth = FirebaseAuth.instance;
-  //CollectionReference ref = FirebaseFirestore.instance.collection('users');
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmpassController = TextEditingController();
   final TextEditingController userNamecontroller = TextEditingController();
