@@ -47,54 +47,54 @@ class ListProduct extends StatelessWidget {
           ),
         ),
         body: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10),
             child: ListView(
-              children: [
-                Column(children: <Widget>[
-                  Container(
-                      height: 20,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Column(children: <Widget>[
+              Container(
+                  height: 20,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                name,
-                                style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.bold),
-                              ),
-                            ],
+                          Text(
+                            name,
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.bold),
                           ),
                         ],
-                      )),
-                  Container(
-                      height: 800,
-                      child: GridView.count(
-                        crossAxisCount: 2,
-                        scrollDirection: Axis.vertical,
-                        children: snapshot
-                            .map((e) => GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .pushReplacement(MaterialPageRoute(
-                                            builder: (ctx) => DetailView(
-                                                  location: e.Location,
-                                                  image: e.image,
-                                                  name: e.name,
-                                                  price: e.price,
-                                                )));
-                                  },
-                                  child: ProductListSingleProduct(
-                                      location: e.Location,
-                                      image: e.image,
-                                      price: e.price,
-                                      name: e.name),
-                                ))
-                            .toList(),
-                      ))
-                ]),
-              ],
-            )));
+                      ),
+                    ],
+                  )),
+              Container(
+                  height: 800,
+                  width: double.infinity,
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    scrollDirection: Axis.vertical,
+                    children: snapshot
+                        .map((e) => GestureDetector(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushReplacement(MaterialPageRoute(
+                                        builder: (ctx) => DetailView(
+                                              location: e.Location,
+                                              image: e.image,
+                                              name: e.name,
+                                              price: e.price,
+                                            )));
+                              },
+                              child: ProductListSingleProduct(
+                                  location: e.Location,
+                                  image: e.image,
+                                  price: e.price,
+                                  name: e.name),
+                            ))
+                        .toList(),
+                  ))
+            ]),
+          ],
+        )));
   }
 }

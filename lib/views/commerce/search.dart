@@ -3,7 +3,6 @@ import 'package:app2/views/commerce/provider/product_provider.dart';
 import 'package:app2/views/commerce/singleproducts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../model/product.dart';
 
 class Search extends SearchDelegate<void> {
@@ -53,7 +52,6 @@ class Search extends SearchDelegate<void> {
                     );
                   },
                   child: SingleProduct(
-                    location: e.Location,
                     image: e.image,
                     name: e.name,
                     price: e.price,
@@ -86,7 +84,6 @@ class Search extends SearchDelegate<void> {
                     );
                   },
                   child: SingleProduct(
-                   location: e.Location,
                     image: e.image,
                     name: e.name,
                     price: e.price,

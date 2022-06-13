@@ -16,35 +16,41 @@ class ProductListSingleProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        height: 250,
-        width: 162,
-        child: Column(children: <Widget>[
-          Container(
-            height: 76,
-            width: 160,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover, image: NetworkImage(image!))),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "${location}",
-                style:
-                    const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+        height: 260,
+        width: 165,
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                height: 86,
+                width: 165,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover, image: NetworkImage(image!))),
               ),
-              IconButton(onPressed: () {}, icon: Icon(Icons.pin_drop))
-            ],
-          ),
-          Text(
-            name!,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          Text("ksh ${price.toString()}",
-              style:
-                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-        ]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "${location}",
+                    style: const TextStyle(
+                      fontSize: 13,
+                    ),
+                  ),
+                  IconButton(onPressed: () {}, icon: Icon(Icons.pin_drop))
+                ],
+              ),
+              Text(
+                name!,
+                style: const TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              Text("ksh ${price.toString()}",
+                  style: const TextStyle(
+                    fontSize: 16,
+                  )),
+            ]),
       ),
     );
   }

@@ -5,15 +5,11 @@ import 'package:app2/views/commerce/contact_us.dart';
 import 'package:app2/views/commerce/notifications.dart';
 import 'package:app2/views/commerce/profile_page.dart';
 import 'package:app2/views/commerce/provider/product_provider.dart';
-
 import 'package:app2/views/commerce/singleproducts.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:light_carousel/main/light_carousel.dart';
-
 import 'package:provider/provider.dart';
-
 import '../../model/product.dart';
 import 'detail_page.dart';
 import 'list_products.dart';
@@ -64,6 +60,9 @@ class _DefaultPageState extends State<DefaultPage> {
                   ],
                 ),
               ]),
+        ),
+        SizedBox(
+          height: 5,
         ),
         Row(
           children: productProvider.homeArrivalRow.map((e) {
@@ -153,6 +152,9 @@ class _DefaultPageState extends State<DefaultPage> {
             ),
           ],
         ),
+      ),
+      SizedBox(
+        height: 5,
       ),
       Row(
         children: productProvider.getHomeFeaturelist.map((e) {
@@ -418,10 +420,16 @@ class _DefaultPageState extends State<DefaultPage> {
                         ]),
                         //
                         const SizedBox(
-                          height: 10,
+                          height: 5,
                         ),
                         _buildFeatured(),
+                        const SizedBox(
+                          height: 5,
+                        ),
                         _buildNewArrivals(),
+                        const SizedBox(
+                          height: 5,
+                        ),
                       ],
                     ),
                   ),

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class SingleProduct extends StatelessWidget {
-  const SingleProduct(
-      {Key? key,
-      required this.image,
-      required this.price,
-      required this.name,
-      required this.location})
-      : super(key: key);
+  const SingleProduct({
+    Key? key,
+    required this.image,
+    required this.price,
+    required this.name,
+    this.location,
+  }) : super(key: key);
   final String? image;
   final int? price;
   final String? name;
@@ -18,33 +18,43 @@ class SingleProduct extends StatelessWidget {
       child: Container(
         height: 200,
         width: 162,
-        child: Column(children: <Widget>[
-          Container(
-            height: 110,
-            width: 160,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover, image: NetworkImage(image!))),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "${location}",
-                style:
-                    const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                height: 110,
+                width: 160,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover, image: NetworkImage(image!))),
               ),
-              IconButton(onPressed: () {}, icon: Icon(Icons.pin_drop))
-            ],
-          ),
-          Text(
-            name!,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          Text("ksh ${price.toString()}",
-              style:
-                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-        ]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "${location}",
+                    style: const TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.pin_drop,
+                      ))
+                ],
+              ),
+              Text(
+                name!,
+                style: const TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+              Text("ksh ${price.toString()}",
+                  style: const TextStyle(
+                    fontSize: 14,
+                  )),
+            ]),
       ),
     );
   }

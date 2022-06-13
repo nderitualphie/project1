@@ -74,7 +74,6 @@ class _DetailViewState extends State<DetailView> {
       children: [
         Container(
           height: 230,
-          //color: Colors.blueAccent,
           child: Wrap(children: const [
             Text(
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus varius rhoncus ipsum, at iaculis mauris euismod id. Praesent vel placerat lorem, vitae bibendum massa. Quisque fringilla dui dolor, porta dictum nulla scelerisque et. Fusce scelerisque tempus nunc quis cursus. Fusce et est ac nunc consequat fringilla. Donec risus ex, scelerisque ac ante finibus, egestas maximus eros. In aliquet egestas sapien sed hendrerit. Cras sed congue ligula. Nunc sodales arcu eu nisl faucibus, eu aliquet urna congue. Nulla dapibus massa sed enim elementum, commodo rutrum felis gravida. ',
@@ -146,15 +145,16 @@ class _DetailViewState extends State<DetailView> {
     return Column(children: [
       Center(
         child: Container(
-          width: 400,
+          width: 330,
           child: Card(
             child: Container(
-              padding: EdgeInsets.all(10),
+              //padding: EdgeInsets.all(5),
               child: Container(
                 height: 220,
+               
                 decoration: BoxDecoration(
-                  //color: Colors.blue,
                   image: DecorationImage(
+                    fit: BoxFit.fill,
                     image: NetworkImage(widget.image),
                   ),
                 ),
@@ -171,10 +171,11 @@ class _DetailViewState extends State<DetailView> {
       children: [
         Container(
           height: 120,
+          width: double.infinity,
           child: Row(
             children: [
               Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
@@ -239,14 +240,12 @@ class _DetailViewState extends State<DetailView> {
           child: ListView(
             children: [
               Container(
-                //height: 300,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     _buildImage(),
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 20),
+                      padding: const EdgeInsets.all(10),
                       child: Column(
                         children: [
                           _buildDescriptionPart(),
@@ -254,7 +253,6 @@ class _DetailViewState extends State<DetailView> {
                             height: 10,
                           ),
                           _builddescriptionText(),
-
                           _buildQuantity(),
                           _buildButton(),
                           //

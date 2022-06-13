@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'homepage.dart';
 
 class About extends StatelessWidget {
@@ -36,12 +35,11 @@ class About extends StatelessWidget {
           ),
         ),
         body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15),
+          padding: EdgeInsets.symmetric(horizontal: 10),
           height: double.infinity,
           width: double.infinity,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,       
             children: [
               const Center(
                 child: Text(
@@ -53,7 +51,7 @@ class About extends StatelessWidget {
                 ),
               ),
               Image(
-                image: AssetImage("lib/images/farmer.png"),
+                image: AssetImage("lib/images/icon2.jpeg"),
               ),
               SizedBox(
                 height: 10,
