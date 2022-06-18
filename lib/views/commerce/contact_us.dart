@@ -1,13 +1,14 @@
 import 'dart:core';
 
 import 'package:app2/views/commerce/homepage.dart';
-import 'package:app2/views/commerce/provider/product_provider.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/usermodel.dart';
+import '../../provider/product_provider.dart';
 
 class ContactUs extends StatefulWidget {
   @override

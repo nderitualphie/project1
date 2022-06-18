@@ -134,29 +134,6 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 20,
                         ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.green,
-                              padding: EdgeInsets.all(10),
-                              textStyle: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
-                          onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => Forgotpass()));
-                          },
-                          child: Text(
-                            "Forgot Password ",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
                         MaterialButton(
                           shape: RoundedRectangleBorder(
                               borderRadius:
@@ -212,6 +189,18 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 20,
                         ),
+                        GestureDetector(
+                          child: Text(
+                            "Forgot password | Reset here",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                            ),
+                          ),
+                          onTap: () => Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => Forgotpass())),
+                        )
                       ],
                     ),
                   ),

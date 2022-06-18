@@ -1,7 +1,7 @@
 import 'package:app2/views/commerce/homepage.dart';
 import 'package:app2/views/commerce/notifications.dart';
 
-import 'package:app2/views/commerce/provider/product_provider.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -10,6 +10,7 @@ import 'package:mpesa/mpesa.dart';
 
 import 'package:provider/provider.dart';
 import '../../model/cartmodel.dart';
+import '../../provider/product_provider.dart';
 import 'checkoutsingleproduct.dart';
 
 class CheckoutPage extends StatefulWidget {

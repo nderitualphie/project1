@@ -1,7 +1,9 @@
 import 'package:app2/views/commerce/homepage.dart';
-import 'package:app2/views/commerce/provider/product_provider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../provider/product_provider.dart';
 
 class CartSingleProduct extends StatefulWidget {
   final String? name;

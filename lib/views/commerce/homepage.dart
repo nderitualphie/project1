@@ -4,13 +4,14 @@ import 'package:app2/views/commerce/cart_page.dart';
 import 'package:app2/views/commerce/contact_us.dart';
 import 'package:app2/views/commerce/notifications.dart';
 import 'package:app2/views/commerce/profile_page.dart';
-import 'package:app2/views/commerce/provider/product_provider.dart';
+
 import 'package:app2/views/commerce/singleproducts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:light_carousel/main/light_carousel.dart';
 import 'package:provider/provider.dart';
 import '../../model/product.dart';
+import '../../provider/product_provider.dart';
 import 'detail_page.dart';
 import 'list_products.dart';
 

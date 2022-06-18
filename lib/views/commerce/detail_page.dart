@@ -1,8 +1,9 @@
 import 'package:app2/views/commerce/cart_page.dart';
 import 'package:app2/views/commerce/notifications.dart';
 
+import '../../provider/product_provider.dart';
 import 'homepage.dart';
-import 'provider/product_provider.dart';
+
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';

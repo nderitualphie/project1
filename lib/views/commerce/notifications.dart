@@ -2,8 +2,10 @@
 
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'provider/product_provider.dart';
+
 import 'package:provider/provider.dart';
+
+import '../../provider/product_provider.dart';
 
 class NotificationButton extends StatelessWidget {
    NotificationButton({Key? key}) : super(key: key);

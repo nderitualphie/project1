@@ -1,10 +1,8 @@
 import 'dart:io';
-
+import 'package:app2/views/userview/verifyemail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-
 import 'login.dart';
 
 class Register extends StatefulWidget {
@@ -218,8 +216,7 @@ class _RegisterState extends State<Register> {
                           // },
                           onChanged: (value) {},
                           decoration: InputDecoration(
-                            hintText:
-                                "Enter phone Number in the format 254700000000",
+                            hintText: "254712345678",
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 15.0),
                             hintStyle: TextStyle(color: Colors.black),
@@ -337,7 +334,7 @@ class _RegisterState extends State<Register> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => LoginPage(),
+                      builder: (_) => Verifyemailpage(),
                     ),
                   )
                 });
@@ -348,7 +345,7 @@ class _RegisterState extends State<Register> {
             .set({
           "userId": userCredential.user!.uid,
           "email": emailController.text,
-          "phoneNo": int.parse(phoneNocontroller.text),
+          "phoneNo": (phoneNocontroller.text),
           "userName": userNamecontroller.text,
           "address": addressController.text,
         });

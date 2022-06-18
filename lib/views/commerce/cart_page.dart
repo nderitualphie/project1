@@ -3,9 +3,10 @@ import 'package:app2/views/commerce/notifications.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/cartmodel.dart';
+import '../../provider/product_provider.dart';
 import 'cartsingle_product.dart';
 import 'homepage.dart';
-import 'provider/product_provider.dart';
+
 
 import 'package:flutter/material.dart';
 

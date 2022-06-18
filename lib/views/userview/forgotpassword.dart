@@ -1,7 +1,7 @@
-import 'package:app2/views/commerce/provider/product_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../provider/product_provider.dart';
 import 'login.dart';
 
 class Forgotpass extends StatefulWidget {
@@ -18,7 +18,7 @@ class _ForgotpassState extends State<Forgotpass> {
   late ProductProvider productProvider;
 
   final _formkey = GlobalKey<FormState>();
-  final TextEditingController emailController = TextEditingController();
+  final emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     productProvider = Provider.of<ProductProvider>(context);
@@ -49,14 +49,6 @@ class _ForgotpassState extends State<Forgotpass> {
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                               fontSize: 30,
-                            ),
-                          ),
-                          Text(
-                            "Reset here",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 20,
                             ),
                           ),
                           SizedBox(
@@ -166,7 +158,7 @@ class _ForgotpassState extends State<Forgotpass> {
                               visible: visible,
                               child: Container(
                                   child: CircularProgressIndicator(
-                                color: Colors.white,
+                                color: Colors.green,
                               ))),
                         ],
                       ),
