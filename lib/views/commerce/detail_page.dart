@@ -74,11 +74,11 @@ class _DetailViewState extends State<DetailView> {
     return Column(
       children: [
         Container(
-          height: 230,
+          height: 200,
           child: Wrap(children: const [
             Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus varius rhoncus ipsum, at iaculis mauris euismod id. Praesent vel placerat lorem, vitae bibendum massa. Quisque fringilla dui dolor, porta dictum nulla scelerisque et. Fusce scelerisque tempus nunc quis cursus. Fusce et est ac nunc consequat fringilla. Donec risus ex, scelerisque ac ante finibus, egestas maximus eros. In aliquet egestas sapien sed hendrerit. Cras sed congue ligula. Nunc sodales arcu eu nisl faucibus, eu aliquet urna congue. Nulla dapibus massa sed enim elementum, commodo rutrum felis gravida. ',
-              style: TextStyle(fontSize: 15),
+              'Sourced locallly from our dedicated farmers who carry this nation despite the challenges. Our products are organically grown with minuimun use of pesticides only when demeed neccesary.We get this products from small scale farmers who pay more attention to their produce due to the small size of land, help us in making farming enjoyable from the proceeds. When you buy from us you are empowering that farmer to be able to produce more and provide for their families ',
+              style: TextStyle(fontSize: 16),
             ),
           ]),
         ),
@@ -152,7 +152,6 @@ class _DetailViewState extends State<DetailView> {
               //padding: EdgeInsets.all(5),
               child: Container(
                 height: 220,
-               
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.fill,

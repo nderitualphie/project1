@@ -15,14 +15,11 @@ class _ForgotpassState extends State<Forgotpass> {
   // bool showProgress = false;
   bool visible = false;
   final _auth = FirebaseAuth.instance;
-  late ProductProvider productProvider;
 
   final _formkey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    productProvider = Provider.of<ProductProvider>(context);
-    productProvider.getUserdata();
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
@@ -105,11 +102,6 @@ class _ForgotpassState extends State<Forgotpass> {
                                 height: 40,
                                 onPressed: () {
                                   forgotPass(emailController.text);
-                                  productProvider.userModelList.map((e) => {
-                                        FirebaseAuth.instance
-                                            .sendPasswordResetEmail(
-                                                email: e.email!)
-                                      });
 
                                   setState(() {
                                     visible = true;
@@ -181,7 +173,10 @@ class _ForgotpassState extends State<Forgotpass> {
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => LoginPage()))
               })
-          .catchError((e) {});
+          .catchError((e) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.toString())));
+      });
     }
   }
 }

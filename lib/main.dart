@@ -10,11 +10,10 @@ import 'firebase_options.dart';
 import 'views/commerce/homepage.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized(
-);
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-options: DefaultFirebaseOptions.currentPlatform,
-);
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -37,17 +36,16 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
             primaryColor: Colors.green,
           ),
-          home:Verifyemailpage()
-          // home: StreamBuilder(
-          //   stream: FirebaseAuth.instance.authStateChanges(),
-          //   builder: (context, snapshot) {
-          //     if (snapshot.hasData) {
-          //       return DefaultPage();
-          //     } else {
-          //       return LoginPage();
-          //     }
-          //   },
-          // ),
+          home: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return DefaultPage();
+              } else {
+                return LoginPage();
+              }
+            },
+          ),
         ));
   }
 }

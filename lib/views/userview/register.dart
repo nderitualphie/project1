@@ -345,7 +345,7 @@ class _RegisterState extends State<Register> {
             .set({
           "userId": userCredential.user!.uid,
           "email": emailController.text,
-          "phoneNo": (phoneNocontroller.text),
+          "phoneNo": phoneNocontroller.text,
           "userName": userNamecontroller.text,
           "address": addressController.text,
         });

@@ -1,6 +1,6 @@
 import 'package:app2/views/commerce/homepage.dart';
 import 'package:app2/views/commerce/notifications.dart';
-
+import 'package:app2/views/commerce/order.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,7 +38,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
       accountReference: "Agrocommerce LTD",
       amount: total!,
       businessShortCode: "174379",
-      callbackUrl: "https://6319-154-122-136-25.in.ngrok.io/payment",
+      callbackUrl: "https://5457-102-166-221-55.in.ngrok.io/payment",
     )
         .then((result) {
       FirebaseFirestore.instance.collection("CheckoutResults").add({
@@ -106,6 +106,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
             myList.clear();
           });
           myMethod();
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => Orderpage()));
         });
   }
 
